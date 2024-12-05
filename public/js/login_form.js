@@ -17,9 +17,28 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     console.log(result.message); // Log the message to the console
     // Store the token in localStorage
     localStorage.setItem('token', result.token);
-    window.location.href = '/';
+    // Fetch the dashboard with JWT
+    fetchDashboard();
   } else {
     alert(result.message); // Display an alert message for errors
     console.log(result.message); // Log the error message to the console
   }
 });
+
+async function fetchDashboard() {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await fetch('/dashboard', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    const html = await response.text();
+    document.open();
+    document.write(html);
+    document.close();
+  } catch (error) {
+    console.error('Error fetching dashboard:', error);
+  }
+}
