@@ -2,8 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import userService from '../services/userService.js';
-
-const secretKey = 'your_secret_key'; // Replace with your secret key
+import secretKey from '../config/secretKey.js';
 
 const authController = {
   serveRegistrationForm: (req, res) => {
