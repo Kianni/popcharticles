@@ -12,7 +12,7 @@ document.getElementById('logoutButton').addEventListener('click', async () => {
     console.log(result.message); // Log the message to the console
     // Remove the token from localStorage
     localStorage.removeItem('token');
-    window.location.href = '/login';
+    window.location.href = '/';
   } else {
     alert(result.message); // Display an alert message for errors
     console.log(result.message); // Log the error message to the console
