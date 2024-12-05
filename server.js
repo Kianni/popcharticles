@@ -1,4 +1,5 @@
 import express from 'express';
+import bcrypt from 'bcrypt';
 import connectToDatabase from './db.js';
 
 const app = express();
@@ -20,20 +21,35 @@ app.get('/registration', (req, res) => {
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
 
+  // Server-side validation
+  const usernameRegex = /^[a-zA-Z_]+$/;
+  const passwordRegex = /^[0-9]{4,}$/;
+
+  if (!usernameRegex.test(username)) {
+    return res.status(400).json({ message: 'Username can only contain letters and underscores.' });
+  }
+
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({ message: 'Password must be at least 4 characters long and contain only numbers.' });
+  }
+
   const db = await connectToDatabase();
   const collection = db.collection('users');
 
   // Check if the username already exists
   const existingUser = await collection.findOne({ username });
   if (existingUser) {
-    res.status(400).json({ message: 'Username already exists' });
-  } else {
-    // Insert the new user
-    await collection.insertOne({ username, password });
-    res.status(200).json({ message: 'User registered successfully' });
+    return res.status(400).json({ message: 'Username already exists' });
   }
+
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Insert the new user
+  await collection.insertOne({ username, password: hashedPassword });
+  res.status(200).json({ message: 'User registered successfully' });
 });
 
-app.listen(port, hostname, () => {
+app.listen(port, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
