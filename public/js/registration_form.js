@@ -13,16 +13,18 @@ document.getElementById('registrationForm').addEventListener('submit', async (ev
   }
 
   if (!passwordRegex.test(password)) {
-    alert('Password must be at least 4 characters long and contain only numbers.');
+    alert(
+      'Password must be at least 4 characters long and contain only numbers.'
+    );
     return;
   }
 
   const response = await fetch('/register', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ username, password }),
   });
 
   const result = await response.json();
@@ -32,4 +34,8 @@ document.getElementById('registrationForm').addEventListener('submit', async (ev
   } else {
     alert(result.message);
   }
+
+  // Clear the form fields
+  usernameInput.value = '';
+  passwordInput.value = '';
 });
