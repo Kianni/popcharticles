@@ -10,4 +10,7 @@ router.get('/dashboard', authMiddleware, dashboardController.serveDashboard);
 // Route to fetch articles
 router.get('/articles', dashboardController.fetchArticles);
 
+// Route to update dashboard with fetched articles
+// router.post('/update-dashboard', dashboardController.updateDashboard);
+
 export default router;

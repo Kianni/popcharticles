@@ -1,10 +1,5 @@
 import articleService from '../services/articleService.js';
 
-const serveDashboard = (req, res) => {
-  const username = req.user.username;
-  res.render('dashboard', { username });
-};
-
 const fetchArticles = async (req, res) => {
   try {
     const articles = await articleService.getArticles();
@@ -14,5 +9,15 @@ const fetchArticles = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+const serveDashboard = (req, res) => {
+  res.render('dashboard', { username: req.user.username, articles: [] });
+};
+
+// const updateDashboard = (req, res) => {
+//   const { articles } = req.body;
+//   console.log('Articles received from client:', articles);
+//   res.render('dashboard', { username: "req.user.username", articles });
+// };
 
 export default { serveDashboard, fetchArticles };
