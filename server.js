@@ -1,27 +1,39 @@
-import http from 'http';
+import express from 'express';
 import connectToDatabase from './db.js';
 
+const app = express();
 const hostname = '127.0.0.1';
 const port = 3000;
 
-const server = http.createServer(async (req, res) => {
-    // if needed to ensure that only one request is handled at a time
-    if (req.url === '/') {
-          const db = await connectToDatabase();
-          const collection = db.collection('articles');
+// Middleware to parse JSON bodies
+app.use(express.json());
 
-          // Insert a document to ensure the database and collection are created
-          await collection.insertOne({
-            title: 'Hello, 3. World!',
-            content: 'This is a test article.',
-          });
+// Serve static files from the 'public' folder
+app.use(express.static('public'));
 
-          res.statusCode = 200;
-          res.setHeader('Content-Type', 'text/plain');
-          res.end('こんにちは, World!\n');
-    }
+// Route to serve the registration form
+app.get('/registration', (req, res) => {
+  res.sendFile('registration_form.html', { root: 'public' });
 });
 
-server.listen(port, hostname, () => {
+// Route to handle user registration
+app.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+
+  const db = await connectToDatabase();
+  const collection = db.collection('users');
+
+  // Check if the username already exists
+  const existingUser = await collection.findOne({ username });
+  if (existingUser) {
+    res.status(400).json({ message: 'Username already exists' });
+  } else {
+    // Insert the new user
+    await collection.insertOne({ username, password });
+    res.status(200).json({ message: 'User registered successfully' });
+  }
+});
+
+app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
