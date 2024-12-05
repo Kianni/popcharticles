@@ -1,10 +1,19 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-import connectToDatabase from './db.js';
+import mongoose from 'mongoose';
+import User from './models/User.js';
 
 const app = express();
-const hostname = '127.0.0.1';
 const port = 3000;
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/popcharticles')
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch(err => {
+    console.error('Failed to connect to MongoDB', err);
+  });
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -33,23 +42,27 @@ app.post('/register', async (req, res) => {
     return res.status(400).json({ message: 'Password must be at least 4 characters long and contain only numbers.' });
   }
 
-  const db = await connectToDatabase();
-  const collection = db.collection('users');
+  try {
+    // Check if the username already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
 
-  // Check if the username already exists
-  const existingUser = await collection.findOne({ username });
-  if (existingUser) {
-    return res.status(400).json({ message: 'Username already exists' });
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
+    const newUser = new User({ username, password: hashedPassword });
+    await newUser.save();
+
+    res.status(200).json({ message: 'User registered successfully' });
+  } catch (err) {
+    console.error('Error during user registration:', err);
+    res.status(500).json({ message: 'Internal server error', error: err.message });
   }
-
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Insert the new user
-  await collection.insertOne({ username, password: hashedPassword });
-  res.status(200).json({ message: 'User registered successfully' });
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+  console.log(`Server running at http://127.0.0.1:${port}/`);
 });
