@@ -12,4 +12,10 @@ router.post('/register', authController.registerUser);
 // Route to serve the login form
 router.get('/login', authController.serveLoginForm);
 
+// Route to handle user login
+router.post('/login', authController.loginUser);
+
+// Route to handle user logout
+router.post('/logout', authController.logoutUser);
+
 export default router;

@@ -1,6 +1,9 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import userService from '../services/userService.js';
+
+const secretKey = 'your_secret_key'; // Replace with your secret key
 
 const authController = {
   serveRegistrationForm: (req, res) => {
@@ -45,6 +48,37 @@ const authController = {
   serveLoginForm: (req, res) => {
     res.sendFile('login.html', { root: 'public' });
   },
+
+  loginUser: async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+      // Find the user by username
+      const user = await userService.findUserByUsername(username);
+      if (!user) {
+        return res.status(400).json({ message: 'Invalid username or password' });
+      }
+
+      // Check if the password is correct
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(400).json({ message: 'Invalid username or password' });
+      }
+
+      // Generate a JWT token
+      const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
+
+      res.status(200).json({ message: 'Login successful', token });
+    } catch (err) {
+      console.error('Error during user login:', err);
+      res.status(500).json({ message: 'Internal server error', error: err.message });
+    }
+  },
+
+  logoutUser: (req, res) => {
+    // Invalidate the token (this can be done by removing it from the client-side)
+    res.status(200).json({ message: 'Logout successful' });
+  }
 };
 
 export default authController;
