@@ -21,6 +21,11 @@ app.use(express.json());
 // Serve static files from the 'public' folder
 app.use(express.static('public'));
 
+// Route to serve the home page
+app.get('/', (req, res) => {
+  res.sendFile('index.html', { root: 'public' });
+});
+
 // Route to serve the registration form
 app.get('/registration', (req, res) => {
   res.sendFile('registration_form.html', { root: 'public' });

@@ -26,5 +26,10 @@ document.getElementById('registrationForm').addEventListener('submit', async (ev
   });
 
   const result = await response.json();
-  alert(result.message);
+  if (response.ok) {
+    alert(result.message);
+    window.location.href = '/';
+  } else {
+    alert(result.message);
+  }
 });
