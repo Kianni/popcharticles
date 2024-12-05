@@ -1,18 +1,30 @@
-document
-  .getElementById('registrationForm')
-  .addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+document.getElementById('registrationForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
 
-    const response = await fetch('/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    });
+  // Client-side validation
+  const usernameRegex = /^[a-zA-Z_]+$/;
+  const passwordRegex = /^[0-9]{4,}$/;
 
-    const result = await response.json();
-    alert(result.message);
+  if (!usernameRegex.test(username)) {
+    alert('Username can only contain letters and underscores.');
+    return;
+  }
+
+  if (!passwordRegex.test(password)) {
+    alert('Password must be at least 4 characters long and contain only numbers.');
+    return;
+  }
+
+  const response = await fetch('/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ username, password })
   });
+
+  const result = await response.json();
+  alert(result.message);
+});
