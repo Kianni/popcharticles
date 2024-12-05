@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/User.js';
 import userService from '../services/userService.js';
 
-const userController = {
+const authController = {
   serveRegistrationForm: (req, res) => {
     res.sendFile('registration_form.html', { root: 'public' });
   },
@@ -40,7 +40,11 @@ const userController = {
       console.error('Error during user registration:', err);
       res.status(500).json({ message: 'Internal server error', error: err.message });
     }
-  }
+  },
+
+  serveLoginForm: (req, res) => {
+    res.sendFile('login.html', { root: 'public' });
+  },
 };
 
-export default userController;
+export default authController;

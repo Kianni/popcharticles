@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import userRoutes from './routes/userRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
 const port = 3000;
@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 });
 
 // Use user routes
-app.use(userRoutes);
+app.use(authRoutes);
 
 app.listen(port, () => {
   console.log(`Server running at http://127.0.0.1:${port}/`);
