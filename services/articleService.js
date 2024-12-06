@@ -114,7 +114,7 @@ const cleanText = (text) => {
 
   return text
     .split(/[\s,;]+/)
-    .map(word => word.replace(/[^a-zA-Z-]/g, '')) // Remove non-alphabetic characters except dashes
+    .map(word => word.replace(/[^a-zA-Z-]/g, '').toLowerCase()) // Remove non-alphabetic characters except dashes and convert to lowercase
     .filter(word => word.length > 2 && !stopWords.has(word)); // Filter stop words and short words
 }
 
