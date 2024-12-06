@@ -59,16 +59,63 @@ const getTopPopular = async () => {
 };
 
 const concatenateTextForWordCloud = (articles) => {
-  return articles
+  const result = articles
     .map((article) => {
       const abstract = article.abstract || '';
       const adxKeywords = article.adx_keywords || '';
       const desFacet = (article.des_facet || []).join(' ');
       const title = article.title || '';
 
+      // const cleanedText = cleanText(`${abstract} ${adxKeywords} ${desFacet} ${title}`);
+      // const wordCloudData = cleanedText.join(' ');
+      // console.log(cleanedText);
       return `${abstract} ${adxKeywords} ${desFacet} ${title}`;
     })
     .join(' ');
+    const cleanerText = cleanText(result);
+    const wordCloudData = wordFreq(cleanerText);
+    console.log(wordCloudData);
+    return wordCloudData;
 };
+
+const wordFreq = (wordsByCommas) => {
+  let wordFreq = {};
+  wordsByCommas.forEach((word) => {
+    word = word.trim().toLowerCase(); // Normalize case and trim spaces
+    if (wordFreq[word]) {
+      wordFreq[word]++;
+    } else {
+      wordFreq[word] = 1;
+    }
+  });
+  let wordArray = Object.entries(wordFreq);
+  return wordArray;
+};
+
+const cleanText = (text) => {
+  // Define stop words
+  const stopWords = new Set([
+    'and', 'the', 'to', 'of', 'in', 'on', 'for', 'she', 'he', 'it', 'a', 'an',
+    'this', 'that', 'his', 'her', 'about', 'which', 'with', 'our', 'is', 'was',
+    'were', 'be', 'been', 'are', 'at', 'by', 'from', 'as', 'or', 'but', 'if',
+    'not', 'they', 'their', 'them', 'we', 'us', 'you', 'your', 'i', 'me', 'my',
+    'mine', 'all', 'can', 'will', 'would', 'there', 'what', 'when', 'where',
+    'who', 'how', 'why', 'so', 'up', 'down', 'out', 'over', 'under', 'again',
+    'then', 'once', 'here', 'just', 'also', 'more', 'no', 'yes', 'than', 'too',
+    'very', 'some', 'any', 'each', 'other', 'such', 'only', 'own', 'same',
+    'both', 'few', 'many', 'most', 'much', 'do', 'does', 'did', 'doing', 'has',
+    'have', 'having', 'had', 'should', 'could', 'might', 'must', 'shall', 'may',
+    'now', 'these', 'those', 'because', 'been', 'being', 'into', 'through',
+    'during', 'before', 'after', 'above', 'below', 'between', 'while', 'where',
+    'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other',
+    'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than',
+    'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now'
+  ]);
+
+  return text
+    .split(/[\s,;]+/)
+    .map(word => word.replace(/[^a-zA-Z-]/g, '')) // Remove non-alphabetic characters except dashes
+    .filter(word => word.length > 2 && !stopWords.has(word)); // Filter stop words and short words
+}
 
 export default { getArticles, getTopPopular };

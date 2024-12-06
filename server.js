@@ -25,7 +25,7 @@ mongoose.connect('mongodb://localhost:27017/popcharticles')
 app.use(express.json());
 
 // Serve static files from the 'public' folder
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
