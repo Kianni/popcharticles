@@ -13,7 +13,4 @@ router.get('/articles', dashboardController.fetchArticles);
 // Route to fetch top popular articles
 router.get('/top-popular', dashboardController.fetchTopPopular);
 
-// Route to update dashboard with fetched articles
-// router.post('/update-dashboard', dashboardController.updateDashboard);
-
 export default router;

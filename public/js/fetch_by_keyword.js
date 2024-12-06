@@ -7,17 +7,6 @@ document
       });
       const articles = await response.json();
 
-      // // Send the fetched data to the server
-      // await fetch('/update-dashboard', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ articles }),
-      // });
-
-      // console.log('Articles sent to server:', articles);
-
       // Update the DOM with the fetched articles
       const articlesContainer = document.getElementById('articlesContainer');
       articlesContainer.innerHTML = ''; // Clear previous articles

@@ -7,11 +7,6 @@ document
       });
       const wordCloudProto = await response.json(); // Update the DOM with the fetched articles
 
-      //   const topArticlesContainer = document.getElementById('topArticlesContainer');
-      //   topArticlesContainer.innerHTML = wordCloudProto; // Clear previous articles
-
-      //   console.log('Articles fetched and DOM updated:', wordCloudProto);
-      console.log('Articles fetched:', wordCloudProto);
       // Verify the structure of wordCloudProto
       if (
         !Array.isArray(wordCloudProto) ||
@@ -22,6 +17,7 @@ document
         console.error('Invalid wordCloudProto structure:', wordCloudProto);
         return;
       }
+      
       // Generate the word cloud
       WordCloud(document.getElementById('wordCloudContainer'), {
         list: wordCloudProto,
