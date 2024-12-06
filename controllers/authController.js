@@ -6,7 +6,7 @@ import secretKey from '../config/secretKey.js';
 
 const authController = {
   serveRegistrationForm: (req, res) => {
-    res.sendFile('registration_form.html', { root: 'public' });
+    res.render('registration_form', { title: 'Registration' });
   },
 
   registerUser: async (req, res) => {
@@ -45,7 +45,7 @@ const authController = {
   },
 
   serveLoginForm: (req, res) => {
-    res.sendFile('login.html', { root: 'public' });
+    res.render('login', { title: 'Login' });
   },
 
   loginUser: async (req, res) => {

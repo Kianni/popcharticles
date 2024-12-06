@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/authRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
+import expressLayouts from 'express-ejs-layouts';
 
 const app = express();
 const port = 3000;
@@ -30,6 +31,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// Use express-ejs-layouts
+app.use(expressLayouts);
+app.set('layout', 'layout');
 
 // Route to serve the home page
 app.get('/', (req, res) => {

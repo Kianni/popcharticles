@@ -21,7 +21,11 @@ const fetchTopPopular = async (req, res) => {
 };
 
 const serveDashboard = (req, res) => {
-  res.render('dashboard', { username: req.user.username, articles: [] });
+  res.render('dashboard', {
+    username: req.user.username,
+    articles: [],
+    title: 'Dashboard',
+  });
 };
 
 // const updateDashboard = (req, res) => {
