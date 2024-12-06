@@ -54,7 +54,21 @@ const getTopPopular = async () => {
     throw new Error('Network response was not ok');
   }
   const data = await response.json();
-  return data.results;
+  const textForWordCloud = concatenateTextForWordCloud(data.results);
+  return textForWordCloud;
+};
+
+const concatenateTextForWordCloud = (articles) => {
+  return articles
+    .map((article) => {
+      const abstract = article.abstract || '';
+      const adxKeywords = article.adx_keywords || '';
+      const desFacet = (article.des_facet || []).join(' ');
+      const title = article.title || '';
+
+      return `${abstract} ${adxKeywords} ${desFacet} ${title}`;
+    })
+    .join(' ');
 };
 
 export default { getArticles, getTopPopular };

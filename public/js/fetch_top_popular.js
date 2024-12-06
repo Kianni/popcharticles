@@ -3,23 +3,14 @@ document
   .addEventListener('click', async () => {
     try {
       const response = await fetch('/top-popular', {
-        method: 'GET'
+        method: 'GET',
       });
-      const articles = await response.json(); // Update the DOM with the fetched articles
+      const wordCloudProto = await response.json(); // Update the DOM with the fetched articles
 
-      // const articlesContainer = document.getElementById('articlesContainer');
-      // articlesContainer.innerHTML = ''; // Clear previous articles
+      const topArticlesContainer = document.getElementById('topArticlesContainer');
+      topArticlesContainer.innerHTML = wordCloudProto; // Clear previous articles
 
-      // articles.forEach(article => {
-      //   const articleElement = document.createElement('li');
-      //   articleElement.innerHTML = `
-      //     <h3>${article.webTitle}</h3>
-      //     <p>${article.fields.trailText}</p>
-      //     <a href="${article.webUrl}" target="_blank">Read more</a>
-      //     `;
-      //   articlesContainer.appendChild(articleElement);
-      // });
-      console.log('Articles fetched and DOM updated:', articles);
+      console.log('Articles fetched and DOM updated:', wordCloudProto);
     } catch (error) {
       console.error('Error fetching articles:', error);
     }
