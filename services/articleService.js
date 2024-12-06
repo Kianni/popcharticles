@@ -1,7 +1,6 @@
 import fetch from 'node-fetch';
-
-// Replace 'your_api_key_here' with your actual Guardian API key
-const API_KEY = 'a96f679f-208f-4903-9ffa-654022cab934';
+import guardianApiKey from '../config/guardianApiKey.js';
+import nyTimesApiKey from '../config/nyTimesApiKey.js';
 
 // Base URL for The Guardian API
 const BASE_URL = 'https://content.guardianapis.com/search';
@@ -9,12 +8,12 @@ const BASE_URL = 'https://content.guardianapis.com/search';
 // Function to fetch articles by keyword
 const fetchArticlesByKeyword = async (keyword, fromDate = null, toDate = null) => {
   const params = new URLSearchParams({
-    'q': keyword,
-    'api-key': API_KEY,
+    q: keyword,
+    'api-key': guardianApiKey,
     'from-date': fromDate,
     'to-date': toDate,
-    'show-fields': 'trailText',  // Include abstracts
-    'page-size': '5'  // Limit to 5 articles
+    'show-fields': 'trailText', // Include abstracts
+    'page-size': '5', // Limit to 5 articles
   });
 
   const response = await fetch(`${BASE_URL}?${params.toString()}`);
@@ -44,18 +43,18 @@ const getArticles = async () => {
 };
 
 const getTopPopular = async () => {
-  // const params = new URLSearchParams({
-  //   'api-key': API_KEY,
-  //   'show-fields': 'trailText',  // Include abstracts
-  //   'page-size': '5',  // Limit to 5 articles
-  //   'order-by': 'relevance'  // Order by relevance
-  // });
+  const BASE_URL = 'https://api.nytimes.com/svc/mostpopular/v2/viewed/7.json';
 
-  // const response = await fetch(`${BASE_URL}?${params.toString()}`);
-  // const data = await response.json();
-  // return data.response.results;
+  const params = new URLSearchParams({
+    'api-key': nyTimesApiKey,
+  });
 
-  return ["Article 1", "Article 2", "Article 3", "Article 4", "Article 5"];
+  const response = await fetch(`${BASE_URL}?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  const data = await response.json();
+  return data.results;
 };
 
 export default { getArticles, getTopPopular };
