@@ -43,4 +43,19 @@ const getArticles = async () => {
   }
 };
 
-export default { getArticles };
+const getTopPopular = async () => {
+  // const params = new URLSearchParams({
+  //   'api-key': API_KEY,
+  //   'show-fields': 'trailText',  // Include abstracts
+  //   'page-size': '5',  // Limit to 5 articles
+  //   'order-by': 'relevance'  // Order by relevance
+  // });
+
+  // const response = await fetch(`${BASE_URL}?${params.toString()}`);
+  // const data = await response.json();
+  // return data.response.results;
+
+  return ["Article 1", "Article 2", "Article 3", "Article 4", "Article 5"];
+};
+
+export default { getArticles, getTopPopular };

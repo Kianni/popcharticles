@@ -2,10 +2,10 @@ document
   .getElementById('fetchTopArticles')
   .addEventListener('click', async () => {
     try {
-      // const response = await fetch('/top-popular', {
-      //   method: 'GET'
-      // });
-      // const articles = await response.json(); // Update the DOM with the fetched articles
+      const response = await fetch('/top-popular', {
+        method: 'GET'
+      });
+      const articles = await response.json(); // Update the DOM with the fetched articles
 
       // const articlesContainer = document.getElementById('articlesContainer');
       // articlesContainer.innerHTML = ''; // Clear previous articles
@@ -19,7 +19,6 @@ document
       //     `;
       //   articlesContainer.appendChild(articleElement);
       // });
-      const articles = 'Top popular articles';
       console.log('Articles fetched and DOM updated:', articles);
     } catch (error) {
       console.error('Error fetching articles:', error);

@@ -10,6 +10,16 @@ const fetchArticles = async (req, res) => {
   }
 };
 
+const fetchTopPopular = async (req, res) => {
+  try {
+    const articles = await articleService.getTopPopular();
+    res.json(articles);
+  } catch (error) {
+    console.error('Error fetching top popular articles:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 const serveDashboard = (req, res) => {
   res.render('dashboard', { username: req.user.username, articles: [] });
 };
@@ -20,4 +30,4 @@ const serveDashboard = (req, res) => {
 //   res.render('dashboard', { username: "req.user.username", articles });
 // };
 
-export default { serveDashboard, fetchArticles };
+export default { serveDashboard, fetchArticles, fetchTopPopular };
