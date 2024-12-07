@@ -31,13 +31,15 @@ async function fetchDashboard() {
     const response = await fetch('/dashboard', {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     const html = await response.text();
     document.open();
     document.write(html);
     document.close();
+    // Update the URL in the address bar
+    history.replaceState(null, '', '/dashboard');
   } catch (error) {
     console.error('Error fetching dashboard:', error);
   }
