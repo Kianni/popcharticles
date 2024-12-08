@@ -38,7 +38,7 @@ app.set('layout', 'layout');
 
 // Route to serve the home page
 app.get('/', (req, res) => {
-  res.sendFile('index.html', { root: 'public' });
+  res.render('index', { title: 'Home' });
 });
 
 // Use user routes
