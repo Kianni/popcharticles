@@ -2,11 +2,12 @@ import fetch from 'node-fetch';
 import guardianApiKey from '../config/guardianApiKey.js';
 import nyTimesApiKey from '../config/nyTimesApiKey.js';
 
-// Base URL for The Guardian API
-const BASE_URL = 'https://content.guardianapis.com/search';
-
 // Function to fetch articles by keyword
 const fetchArticlesByKeyword = async (keyword, fromDate = null, toDate = null) => {
+
+  // Base URL for The Guardian API
+  const BASE_URL = 'https://content.guardianapis.com/search';
+
   const params = new URLSearchParams({
     q: keyword,
     'api-key': guardianApiKey,
@@ -43,6 +44,14 @@ const getArticles = async () => {
 };
 
 const getTopPopular = async () => {
+  const data = await fetchTopPopularFromAPI();
+  const rawText = concatenateTextForWordCloud(data.results);
+  const cleanerText = cleanText(rawText);
+  const wordCloudData = wordFreq(cleanerText);
+  return wordCloudData;
+};
+
+const fetchTopPopularFromAPI = async () => {
   const BASE_URL = 'https://api.nytimes.com/svc/mostpopular/v2/viewed/7.json';
 
   const params = new URLSearchParams({
@@ -53,13 +62,11 @@ const getTopPopular = async () => {
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
-  const data = await response.json();
-  const textForWordCloud = concatenateTextForWordCloud(data.results);
-  return textForWordCloud;
+  return response.json();
 };
 
 const concatenateTextForWordCloud = (articles) => {
-  const result = articles
+  return articles
     .map((article) => {
       const abstract = article.abstract || '';
       const adxKeywords = article.adx_keywords || '';
@@ -72,13 +79,9 @@ const concatenateTextForWordCloud = (articles) => {
       return `${abstract} ${adxKeywords} ${desFacet} ${title}`;
     })
     .join(' ');
-    const cleanerText = cleanText(result);
-    const wordCloudData = wordFreq(cleanerText);
-    console.log(wordCloudData);
-    return wordCloudData;
 };
 
-const wordFreq = (wordsByCommas) => {
+const wordFreq = (wordsByCommas, minFrequency = null, topN = null) => {
   let wordFreq = {};
   wordsByCommas.forEach((word) => {
     word = word.trim().toLowerCase(); // Normalize case and trim spaces
@@ -89,6 +92,20 @@ const wordFreq = (wordsByCommas) => {
     }
   });
   let wordArray = Object.entries(wordFreq);
+
+  // Filter words by minimum frequency
+  if (minFrequency !== null){
+    wordArray = wordArray.filter(([word, freq]) => freq >= minFrequency);
+  }
+
+  // Sort the word array by frequency in descending order
+  wordArray.sort((a, b) => b[1] - a[1]);
+
+  // If topN is specified, take only the top N words
+  if (topN !== null) {
+    wordArray = wordArray.slice(0, topN);
+  }
+
   return wordArray;
 };
 
