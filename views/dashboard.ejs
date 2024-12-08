@@ -1,5 +1,4 @@
 <h1>Welcome to your dashboard, <%= username %>!</h1>
-<button id="logoutButton">Logout</button>
 
 <button class="btn btn-primary" id="fetchByKeywordButton">Fetch Articles by Keyword</button>
 <button id="fetchTopArticles" title="Fetch Word Cloud from NYTimes last seven days most viewed articles">Fetch Word Cloud</button>
@@ -16,7 +15,6 @@
   <% include('partials/word_cloud') %>
 </div>
 
-<script src="/js/logout.js"></script>
 <script src="/js/fetch_by_keyword.js"></script>
 <script src="/js/wordcloud2.js"></script>
 <script src="/js/fetch_top_popular.js"></script>
