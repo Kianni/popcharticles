@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/dashboard', authMiddleware, dashboardController.serveDashboard);
 
 // Route to fetch articles by keyword
-router.get('/articles', dashboardController.fetchArticles);
+router.get('/articles', authMiddleware, dashboardController.fetchArticles);
 
 // Route to fetch top popular articles
 router.get('/top-popular', dashboardController.fetchTopPopular);

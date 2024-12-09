@@ -18,7 +18,7 @@ const fetchArticles = async (req, res) => {
     res.render('dashboard', {
       title: 'Articles',
       articles,
-      username: 'req.user.username',
+      username: req.user.username,
     });
   } catch (error) {
     console.error('Error fetching articles:', error);

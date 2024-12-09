@@ -5,6 +5,8 @@ import { fileURLToPath } from 'url';
 import authRoutes from './routes/authRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 import expressLayouts from 'express-ejs-layouts';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const port = 3000;
@@ -24,6 +26,12 @@ mongoose.connect('mongodb://localhost:27017/popcharticles')
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+
+// Parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Parse cookies
+app.use(cookieParser());
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));

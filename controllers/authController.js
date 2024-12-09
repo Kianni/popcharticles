@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
 import userService from '../services/userService.js';
 import secretKey from '../config/secretKey.js';
 
@@ -50,24 +49,27 @@ const authController = {
 
   loginUser: async (req, res) => {
     const { username, password } = req.body;
-
     try {
       // Find the user by username
       const user = await userService.findUserByUsername(username);
       if (!user) {
+        console.log('User not found');  
         return res.status(400).json({ message: 'Invalid username or password' });
       }
 
       // Check if the password is correct
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
+        console.log('Invalid password');
         return res.status(400).json({ message: 'Invalid username or password' });
       }
 
       // Generate a JWT token
       const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
 
-      res.status(200).json({ message: 'Login successful', token });
+      res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'Strict' });
+      // res.status(200).json({ message: 'Login successful' });
+      res.redirect('/dashboard');
     } catch (err) {
       console.error('Error during user login:', err);
       res.status(500).json({ message: 'Internal server error', error: err.message });
@@ -75,8 +77,8 @@ const authController = {
   },
 
   logoutUser: (req, res) => {
-    // Invalidate the token (this can be done by removing it from the client-side)
-    res.status(200).json({ message: 'Logout successful' });
+    res.clearCookie('token', { httpOnly: true, secure: true, sameSite: 'Strict' });
+    res.status(200).json({ message: 'Logout successful' }); // Redirect to the login page after logout
   }
 };
 
