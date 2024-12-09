@@ -3,7 +3,7 @@ import guardianApiKey from '../config/guardianApiKey.js';
 import nyTimesApiKey from '../config/nyTimesApiKey.js';
 
 // Function to fetch articles by keyword
-const fetchArticlesByKeyword = async (keyword, fromDate = null, toDate = null) => {
+const fetchArticlesByKeyword = async (keyword, fromDate, toDate, howManyArticles) => {
 
   // Base URL for The Guardian API
   const BASE_URL = 'https://content.guardianapis.com/search';
@@ -14,29 +14,27 @@ const fetchArticlesByKeyword = async (keyword, fromDate = null, toDate = null) =
     'from-date': fromDate,
     'to-date': toDate,
     'show-fields': 'trailText', // Include abstracts
-    'page-size': '5', // Limit to 5 articles
+    'page-size': howManyArticles,
   });
 
   const response = await fetch(`${BASE_URL}?${params.toString()}`);
   const data = await response.json();
+  if (!data.response || !data.response.results) {
+    // throw new Error('No articles found');
+    data.response.results = [];
+  }
   return data.response.results;
 };
 
-// Example: Fetch articles about "climate change"
-const getArticles = async () => {
+// Example: Fetch articles about "cybersecurity"
+const getArticles = async (keyword, fromDate, toDate, howManyArticles) => {
   try {
-    const articles = await fetchArticlesByKeyword("climate change", "2024-01-01", "2024-12-31");
-
-    // Log the results to the console
-    articles.forEach(article => {
-      console.log(`Title: ${article.webTitle}`);
-      console.log(`Published: ${article.webPublicationDate}`);
-      console.log(`Abstract: ${article.fields.trailText}`);
-      console.log(`URL: ${article.webUrl}`);
-      console.log();
-    });
-
-    return articles;
+    return await fetchArticlesByKeyword(
+      keyword,
+      fromDate,
+      toDate,
+      howManyArticles
+    );
   } catch (error) {
     console.error('Error fetching articles:', error);
     throw error;

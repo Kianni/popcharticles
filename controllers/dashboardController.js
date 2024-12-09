@@ -2,8 +2,24 @@ import articleService from '../services/articleService.js';
 
 const fetchArticles = async (req, res) => {
   try {
-    const articles = await articleService.getArticles();
-    res.json(articles);
+    let { keyword, fromDate, toDate, howManyArticles } = req.query;
+    // Set default values if parameters are undefined or empty (form is empty)
+    // keyword = keyword || 'cybersecurity';
+    // fromDate = fromDate || '2023-01-01';
+    // toDate = toDate || '2023-12-31';
+    // howManyArticles = howManyArticles || 5;
+
+    const articles = await articleService.getArticles(
+      keyword,
+      fromDate,
+      toDate,
+      howManyArticles
+    );
+    res.render('dashboard', {
+      title: 'Articles',
+      articles,
+      username: 'req.user.username',
+    });
   } catch (error) {
     console.error('Error fetching articles:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -27,11 +43,5 @@ const serveDashboard = (req, res) => {
     title: 'Dashboard',
   });
 };
-
-// const updateDashboard = (req, res) => {
-//   const { articles } = req.body;
-//   console.log('Articles received from client:', articles);
-//   res.render('dashboard', { username: "req.user.username", articles });
-// };
 
 export default { serveDashboard, fetchArticles, fetchTopPopular };
