@@ -1,6 +1,6 @@
 document.getElementById('logoutButton').addEventListener('click', async () => {
   console.log('Logout button clicked');
-  const response = await fetch('/logout', {
+  const response = await fetch('http://127.0.0.1:3000/logout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
