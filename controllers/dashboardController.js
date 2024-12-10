@@ -34,7 +34,7 @@ const fetchTopPopular = async (req, res) => {
       popularityPeriod=7,
       dateOfSearch,
       wordFrequencyThreshold,
-      includedTopWordsNumber,
+      includedTopWordsNumber=50,
       req.user._id
     );
     res.json(articles);

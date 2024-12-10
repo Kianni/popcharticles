@@ -129,7 +129,11 @@ const getTopPopular = async (
   
   const rawText = concatenateTextForWordCloud(data.results);
   const cleanerText = cleanText(rawText);
-  const wordCloudData = wordFreq(cleanerText);
+  const wordCloudData = wordFreq(
+    cleanerText,
+    null,
+    includedTopWordsNumber
+  );
   return wordCloudData;
 };
 
