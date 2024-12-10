@@ -1,7 +1,13 @@
 <h1>Welcome to your dashboard, <%= username %>!</h1>
 
 <button id="fetchTopArticles" title="Fetch Word Cloud from NYTimes last seven days most viewed articles">Fetch Word Cloud</button>
-
+  <div class="container center-buttons">
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary">NYTimes Most Popular</button>
+      <button type="button" class="btn btn-secondary">Guardian keyword search</button>
+      <button type="button" class="btn btn-success">Archive</button>
+    </div>
+  </div>
 <div id="articlesContainer">
   <%- include('partials/keyword_articles') %>
 </div>
