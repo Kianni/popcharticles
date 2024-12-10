@@ -16,7 +16,7 @@ const fetchByKeyword = async (req, res) => {
       howManyArticles,
       req.user._id
     );
-    res.render('keyword-articles', {
+    res.render('guardian-search', {
       title: 'Articles',
       articles,
       username: req.user.username,
