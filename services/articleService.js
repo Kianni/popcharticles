@@ -223,4 +223,14 @@ const cleanText = (text) => {
     .filter(word => word.length > 2 && !stopWords.has(word)); // Filter stop words and short words
 }
 
-export default { getArticlesByKeyword, getTopPopular };
+const getUserSearches = async (userId) => {
+  try {
+    const searches = await Search.find({ user: userId }).sort({ dateOfSearch: -1 });
+    return searches;
+  } catch (error) {
+    console.error('Error fetching user searches:', error);
+    return [];
+  }
+};
+
+export default { getArticlesByKeyword, getTopPopular, getUserSearches };

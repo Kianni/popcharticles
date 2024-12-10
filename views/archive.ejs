@@ -1,2 +1,15 @@
-archive
 <a href="/dashboard" class="btn btn-success">To Dashboard</a>
+
+<ul>
+  <% searches.forEach(search => { %>
+    <li>
+      <strong>Keyword:</strong> <%= search.keyword %> <br>
+      <strong>Date of Search:</strong> <%= search.dateOfSearch.toDateString() %> <br>
+      <strong>From:</strong> <%= search.periodOfSearch.dateFrom ? search.periodOfSearch.dateFrom.toDateString() : 'N/A' %> <br>
+      <strong>To:</strong> <%= search.periodOfSearch.dateTo ? search.periodOfSearch.dateTo.toDateString() : 'N/A' %> <br>
+      <strong>Popularity Period:</strong> <%= search.popularityPeriod %> days <br>
+      <strong>Word Frequency Threshold:</strong> <%= search.wordFrequencyThreshold %> <br>
+      <strong>Included Top Words Number:</strong> <%= search.includedTopWordsNumber %> <br>
+    </li>
+  <% }) %>
+</ul>

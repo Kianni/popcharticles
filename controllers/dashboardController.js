@@ -68,12 +68,18 @@ const serveGuardianSearch = (req, res) => {
   });
 }
 
-const serveArchive = (req, res) => {
-  res.render('archive', {
-    username: req.user.username,
-    articles: [],
-    title: 'Archive',
-  });
-}
+const serveArchive = async (req, res) => {
+  try {
+    const searches = await articleService.getUserSearches(req.user._id);
+    res.render('archive', {
+      username: req.user.username,
+      searches,
+      title: 'Archive',
+    });
+  } catch (error) {
+    console.error('Error fetching user searches:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
 export default { serveDashboard, fetchByKeyword, fetchTopPopular, serveNYTimesMostPopular, serveGuardianSearch, serveArchive };
