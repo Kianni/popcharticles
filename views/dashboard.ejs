@@ -1,20 +1,10 @@
 <h1>Welcome to your dashboard, <%= username %>!</h1>
 
-<button id="fetchTopArticles" title="Fetch Word Cloud from NYTimes last seven days most viewed articles">Fetch Word Cloud</button>
+
   <div class="container center-buttons">
 <div class="btn-group">
-  <a href="/nyt-most-popular" class="btn btn-primary">NYTimes Most Popular</a>
+  <a href="/nytimes-most-popular" class="btn btn-primary">NYTimes Most Popular</a>
   <a href="/guardian-search" class="btn btn-secondary">Guardian Keyword Search</a>
   <a href="/archive" class="btn btn-success">Archive</a>
 </div>
   </div>
-<div id="articlesContainer">
-  <%- include('partials/keyword_articles') %>
-</div>
-
-<div id="wordCloudContainer" style="width: 1000px; height: 800px;">
-  <%- include('partials/word_cloud') %>
-</div>
-
-<script src="/js/wordcloud2.js"></script>
-<script src="/js/fetch_top_popular.js"></script>

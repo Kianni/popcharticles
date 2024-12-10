@@ -13,4 +13,8 @@ router.get('/articles', authMiddleware, dashboardController.fetchByKeyword);
 // Route to fetch top popular articles
 router.get('/top-popular', authMiddleware, dashboardController.fetchTopPopular);
 
+router.get('/nytimes-most-popular', authMiddleware, dashboardController.serveNYTimesMostPopular);
+router.get('/guardian-search', authMiddleware, dashboardController.serveGuardianSearch);
+router.get('/archive', authMiddleware, dashboardController.serveArchive);
+
 export default router;

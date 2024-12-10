@@ -16,7 +16,7 @@ const fetchByKeyword = async (req, res) => {
       howManyArticles,
       req.user._id
     );
-    res.render('dashboard', {
+    res.render('keyword-articles', {
       title: 'Articles',
       articles,
       username: req.user.username,
@@ -52,4 +52,28 @@ const serveDashboard = (req, res) => {
   });
 };
 
-export default { serveDashboard, fetchByKeyword, fetchTopPopular };
+const serveNYTimesMostPopular = (req, res) => {
+  res.render('nytimes-most-popular', {
+    username: req.user.username,
+    articles: [],
+    title: 'NY Times Most Popular',
+  });
+}
+
+const serveGuardianSearch = (req, res) => {
+  res.render('guardian-search', {
+    username: req.user.username,
+    articles: [],
+    title: 'Guardian Search',
+  });
+}
+
+const serveArchive = (req, res) => {
+  res.render('archive', {
+    username: req.user.username,
+    articles: [],
+    title: 'Archive',
+  });
+}
+
+export default { serveDashboard, fetchByKeyword, fetchTopPopular, serveNYTimesMostPopular, serveGuardianSearch, serveArchive };
