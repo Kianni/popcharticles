@@ -9,11 +9,12 @@ const fetchArticles = async (req, res) => {
     // toDate = toDate || '2023-12-31';
     // howManyArticles = howManyArticles || 5;
 
-    const articles = await articleService.getArticles(
+    const articles = await articleService.getArticlesByKeyword(
       keyword,
       fromDate,
       toDate,
-      howManyArticles
+      howManyArticles,
+      req.user._id
     );
     res.render('dashboard', {
       title: 'Articles',
