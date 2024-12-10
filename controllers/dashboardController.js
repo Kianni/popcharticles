@@ -44,6 +44,16 @@ const fetchTopPopular = async (req, res) => {
   }
 };
 
+const fetchTopArticles = async (req, res) => {
+  try {
+    const data = await articleService.callNYTimesAPI();
+    return data.results;
+  } catch (error) {
+    console.error('Error fetching top articles:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 const serveDashboard = (req, res) => {
   res.render('dashboard', {
     username: req.user.username,
@@ -52,13 +62,20 @@ const serveDashboard = (req, res) => {
   });
 };
 
-const serveNYTimesMostPopular = (req, res) => {
-  res.render('nytimes-most-popular', {
-    username: req.user.username,
-    articles: [],
-    title: 'NY Times Most Popular',
-  });
-}
+const serveNYTimesMostPopular = async (req, res) => {
+  try {
+    const articles = await fetchTopArticles();
+    const wordcloudData = [{title: "HABABABA"}];
+    res.render('nytimes-most-popular', {
+      username: req.user.username,
+      articles: articles,
+      wordcloud: wordcloudData,
+      title: 'NY Times Most Popular',
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
 const serveGuardianSearch = (req, res) => {
   res.render('guardian-search', {
@@ -82,4 +99,4 @@ const serveArchive = async (req, res) => {
   }
 };
 
-export default { serveDashboard, fetchByKeyword, fetchTopPopular, serveNYTimesMostPopular, serveGuardianSearch, serveArchive };
+export default { serveDashboard, fetchByKeyword, fetchTopPopular, serveNYTimesMostPopular, serveGuardianSearch, serveArchive, fetchTopArticles };

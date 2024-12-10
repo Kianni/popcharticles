@@ -233,4 +233,9 @@ const getUserSearches = async (userId) => {
   }
 };
 
-export default { getArticlesByKeyword, getTopPopular, getUserSearches };
+export default {
+  getArticlesByKeyword,
+  getTopPopular,
+  getUserSearches,
+  callNYTimesAPI,
+};

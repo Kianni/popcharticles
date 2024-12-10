@@ -1,5 +1,9 @@
 <a href="/dashboard" class="btn btn-success">To Dashboard</a>
 
 
-<%- include('partials/top-articles') %>
-<%- include('partials/top-articles-wordcloud') %>
+<div id="top-articles-container">
+  <%- include('partials/top-articles', { articles: articles }) %>
+</div>
+<div id="top-articles-wordcloud-container">
+  <%- include('partials/top-articles-wordcloud', { wordcloud: wordcloud }) %>
+</div>
