@@ -1,6 +1,6 @@
 import articleService from '../services/articleService.js';
 
-const fetchArticles = async (req, res) => {
+const fetchByKeyword = async (req, res) => {
   try {
     let { keyword, fromDate, toDate, howManyArticles } = req.query;
     // Set default values if parameters are undefined or empty (form is empty)
@@ -29,7 +29,14 @@ const fetchArticles = async (req, res) => {
 
 const fetchTopPopular = async (req, res) => {
   try {
-    const articles = await articleService.getTopPopular();
+    let {popularityPeriod, dateOfSearch, wordFrequencyThreshold, includedTopWordsNumber} = req.query;
+    const articles = await articleService.getTopPopular(
+      popularityPeriod=7,
+      dateOfSearch,
+      wordFrequencyThreshold,
+      includedTopWordsNumber,
+      req.user._id
+    );
     res.json(articles);
   } catch (error) {
     console.error('Error fetching top popular articles:', error);
@@ -45,4 +52,4 @@ const serveDashboard = (req, res) => {
   });
 };
 
-export default { serveDashboard, fetchArticles, fetchTopPopular };
+export default { serveDashboard, fetchByKeyword, fetchTopPopular };

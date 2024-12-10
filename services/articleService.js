@@ -5,7 +5,7 @@ import Article from '../models/Article.js';
 import Search from '../models/Search.js';
 
 // Function to fetch articles by keyword
-const fetchArticlesByKeyword = async (keyword, fromDate, toDate, howManyArticles) => {
+const callGuardianAPI = async (keyword, fromDate, toDate, howManyArticles) => {
 
   // Base URL for The Guardian API
   const BASE_URL = 'https://content.guardianapis.com/search';
@@ -55,7 +55,7 @@ const saveArticles = async (articles, searchId, userId) => {
 const saveSearch = async ({
   popularityPeriod=null,
   periodOfSearch= { dateFrom: null, dateTo: null },
-  keyword="cybersecurity",
+  keyword=null,
   wordFrequencyThreshold=null,
   includedTopWordsNumber=null,
   userId=null}
@@ -91,7 +91,7 @@ const getArticlesByKeyword = async (
       userId: userId,
     });
 
-    const articles = await fetchArticlesByKeyword(
+    const articles = await callGuardianAPI(
       keyword,
       fromDate,
       toDate,
@@ -105,15 +105,35 @@ const getArticlesByKeyword = async (
   }
 };
 
-const getTopPopular = async () => {
-  const data = await fetchTopPopularFromAPI();
+const getTopPopular = async (      
+      popularityPeriod,
+      dateOfSearch,
+      wordFrequencyThreshold,
+      includedTopWordsNumber,
+      userId) => {
+        let data = [];
+        try {
+          const searchId = await saveSearch({
+            popularityPeriod: popularityPeriod,
+            dateOfSearch: dateOfSearch,
+            wordFrequencyThreshold: wordFrequencyThreshold,
+            includedTopWordsNumber: includedTopWordsNumber,
+            userId: userId,
+          });
+          data = await callNYTimesAPI();
+          await saveArticles(data.results, searchId, userId);
+        } catch (error) {
+          console.error('Error fetching top popular articles:', error);
+          return [];
+        }
+  
   const rawText = concatenateTextForWordCloud(data.results);
   const cleanerText = cleanText(rawText);
   const wordCloudData = wordFreq(cleanerText);
   return wordCloudData;
 };
 
-const fetchTopPopularFromAPI = async () => {
+const callNYTimesAPI = async () => {
   const BASE_URL = 'https://api.nytimes.com/svc/mostpopular/v2/viewed/7.json';
 
   const params = new URLSearchParams({
