@@ -78,7 +78,7 @@ const authController = {
 
   logoutUser: (req, res) => {
     res.clearCookie('token', { httpOnly: true, secure: true, sameSite: 'Strict' });
-    res.status(200).json({ message: 'Logout successful' }); // Redirect to the login page after logout
+    res.redirect('/');
   }
 };
 
