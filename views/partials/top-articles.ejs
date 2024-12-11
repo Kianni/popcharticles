@@ -1,3 +1,19 @@
+<form action="/top-popular-fetch-and-save" method="get" class="form-inline mb-3">
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="popularityPeriod" id="days1" value="1">
+    <label class="form-check-label" for="days1">1 Day</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="popularityPeriod" id="days7" value="7" checked>
+    <label class="form-check-label" for="days7">7 Days</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="popularityPeriod" id="days30" value="30">
+    <label class="form-check-label" for="days30">30 Days</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
 <a href="/top-articles-partial?searchId=<%= searchId %>" class="btn btn-primary">Fetch Top Articles</a>
 <ul>
   <% articles.forEach(article => { %>

@@ -31,10 +31,10 @@ const fetchTopPopular = async (req, res) => {
   try {
     let {popularityPeriod, dateOfSearch, wordFrequencyThreshold, includedTopWordsNumber} = req.query;
     const articles = await articleService.getTopPopular(
-      popularityPeriod=7,
+      (popularityPeriod = popularityPeriod),
       dateOfSearch,
       wordFrequencyThreshold,
-      includedTopWordsNumber=50,
+      (includedTopWordsNumber = 50),
       req.user._id
     );
     res.json(articles);
@@ -55,35 +55,31 @@ const fetchTopArticles = async (req, res) => {
   }
 };
 
+const fetchTopArticlesFromAPIandSavetoDB = async (req, res) => {
+  try {
+    const { popularityPeriod } = req.query;
+    console.log('popularityPeriod in controller:', popularityPeriod); // Debugging log
+    const data = await articleService.callNYTimesAPI(popularityPeriod);
+    const searchId = await articleService.saveSearch({
+      userId: req.user._id,
+      popularityPeriod: popularityPeriod,
+    });
+    await articleService.saveArticles(data.results, searchId, req.user._id);
+    res.redirect(`/top-articles-partial?searchId=${searchId}`);
+    // res.json(data.results);
+  } catch (error) {
+    console.error('Error fetching top articles:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 const serveDashboard = (req, res) => {
   res.render('dashboard', {
     username: req.user.username,
     articles: [],
     title: 'Dashboard',
   });
-};
-
-const serveNYTimesMostPopular = async (req, res) => {
-  try {
-    const articles = await fetchTopArticles();
-    const wordcloudData = [{title: "HABABABA"}];
-    const searchId = await articleService.saveSearch({
-      userId: req.user._id,
-      // Add other search parameters if needed
-    });
-    await articleService.saveArticles(articles, searchId, req.user._id);
-    res.render('nytimes-most-popular', {
-      username: req.user.username,
-      articles: articles,
-      wordcloud: wordcloudData,
-      searchId: searchId,
-      title: 'NY Times Most Popular',
-    });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: 'Internal server error', error: error.message });
-  }
 };
 
 const serveTopArticlesPartial = async (req, res) => {
@@ -142,13 +138,13 @@ const serveArchive = async (req, res) => {
   }
 };
 
-export default { 
-  serveDashboard, 
-  fetchByKeyword, 
-  fetchTopPopular, 
-  serveNYTimesMostPopular, 
-  serveGuardianSearch, 
-  serveArchive, 
+export default {
+  serveDashboard,
+  fetchByKeyword,
+  fetchTopPopular,
+  serveGuardianSearch,
+  serveArchive,
   serveTopArticlesPartial,
-  serveTopArticlesWordcloudPartial 
+  serveTopArticlesWordcloudPartial,
+  fetchTopArticlesFromAPIandSavetoDB,
 };

@@ -137,8 +137,8 @@ const getTopPopular = async (
   return wordCloudData;
 };
 
-const callNYTimesAPI = async () => {
-  const BASE_URL = 'https://api.nytimes.com/svc/mostpopular/v2/viewed/7.json';
+const callNYTimesAPI = async (popularityPeriod) => {
+  const BASE_URL = `https://api.nytimes.com/svc/mostpopular/v2/viewed/${popularityPeriod}.json`;
 
   const params = new URLSearchParams({
     'api-key': nyTimesApiKey,
