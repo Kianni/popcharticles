@@ -20,6 +20,7 @@ router.post('/update-articles', authMiddleware, dashboardController.updateArticl
 
 router.get('/nytimes-most-popular', authMiddleware, dashboardController.serveTopArticlesPartial);
 router.get('/guardian-search', authMiddleware, dashboardController.serveGuardianSearch);
+router.get('/keyword-articles-partial', authMiddleware, dashboardController.serveKeywordArticlesPartial);
 router.get('/archive', authMiddleware, dashboardController.serveArchive);
 
 export default router;

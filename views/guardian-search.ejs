@@ -1,7 +1,7 @@
 <a href="/dashboard" class="btn btn-success">To Dashboard</a>
 
 <div id="keyword-articles-container">
-  <%- include('partials/keyword-articles', { articles: articles }) %>
+  <%- include('partials/keyword-articles', { articles: articles, searchId: searchId }) %>
 </div>
 <div id="keyword-articles-wordcloud-container">
   <%- include('partials/keyword-articles-wordcloud', ) %>

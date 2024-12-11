@@ -3,24 +3,22 @@ import articleService from '../services/articleService.js';
 const fetchByKeyword = async (req, res) => {
   try {
     let { keyword, fromDate, toDate, howManyArticles } = req.query;
-    // Set default values if parameters are undefined or empty (form is empty)
-    // keyword = keyword || 'cybersecurity';
-    // fromDate = fromDate || '2023-01-01';
-    // toDate = toDate || '2023-12-31';
-    // howManyArticles = howManyArticles || 5;
-
-    const articles = await articleService.getArticlesByKeyword(
+    const articles = await articleService.callGuardianAPI(
       keyword,
       fromDate,
       toDate,
-      howManyArticles,
-      req.user._id
+      howManyArticles
     );
-    res.render('guardian-search', {
-      title: 'Articles',
-      articles,
-      username: req.user.username,
+
+    const searchId = await articleService.saveSearch({
+      periodOfSearch: { dateFrom: fromDate, dateTo: toDate },
+      keyword: keyword,
+      userId: req.user._id,
     });
+    
+    await articleService.saveArticles(articles, searchId, req.user._id);
+
+    res.redirect(`/keyword-articles-partial?searchId=${searchId}`);
   } catch (error) {
     console.error('Error fetching articles:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -52,7 +50,7 @@ const fetchTopArticles = async (req, res) => {
 const fetchTopArticlesFromAPIandSavetoDB = async (req, res) => {
   try {
     const { popularityPeriod } = req.query;
-    console.log('popularityPeriod in controller:', popularityPeriod); // Debugging log
+    // console.log('popularityPeriod in controller:', popularityPeriod); // Debugging log
     const data = await articleService.callNYTimesAPI(popularityPeriod);
     const searchId = await articleService.saveSearch({
       userId: req.user._id,
@@ -111,6 +109,21 @@ const serveTopArticlesPartial = async (req, res) => {
   }
 };
 
+const serveKeywordArticlesPartial = async (req, res) => {
+  try {
+    const searchId = req.query.searchId;
+    const articles = await articleService.getArticlesBySearchId(searchId);
+    res.render('guardian-search', {
+      username: req.user.username,
+      articles: articles,
+      searchId: searchId,
+      title: 'Guardian Search',
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 const serveTopArticlesWordcloudPartial = async (req, res) => {
   try {
     const wordcloudData = "what kind of data?" // Adjust if different data source
@@ -160,4 +173,5 @@ export default {
   serveTopArticlesWordcloudPartial,
   fetchTopArticlesFromAPIandSavetoDB,
   updateArticles,
+  serveKeywordArticlesPartial
 };

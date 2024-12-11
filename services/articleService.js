@@ -78,33 +78,33 @@ const saveSearch = async ({
   }
 };
 
-const getArticlesByKeyword = async (
-  keyword,
-  fromDate,
-  toDate,
-  howManyArticles,
-  userId
-) => {
-  try {
-    const searchId = await saveSearch({
-      periodOfSearch: { dateFrom: fromDate, dateTo: toDate },
-      keyword: keyword,
-      userId: userId,
-    });
+// const getArticlesByKeyword = async (
+//   keyword,
+//   fromDate,
+//   toDate,
+//   howManyArticles,
+//   userId
+// ) => {
+//   try {
+//     // const searchId = await saveSearch({
+//     //   periodOfSearch: { dateFrom: fromDate, dateTo: toDate },
+//     //   keyword: keyword,
+//     //   userId: userId,
+//     // });
 
-    const articles = await callGuardianAPI(
-      keyword,
-      fromDate,
-      toDate,
-      howManyArticles
-    );
-    await saveArticles(articles, searchId, userId);
-    return articles;
-  } catch (error) {
-    console.error('Error fetching articles:', error);
-    return [];
-  }
-};
+//     // const articles = await callGuardianAPI(
+//     //   keyword,
+//     //   fromDate,
+//     //   toDate,
+//     //   howManyArticles
+//     // );
+//     // await saveArticles(articles, searchId, userId);
+//     return articles;
+//   } catch (error) {
+//     console.error('Error fetching articles:', error);
+//     return [];
+//   }
+// };
 
 const prepareDataForWordCloud = async (searchId) => {
   let data = [];
@@ -241,7 +241,7 @@ const deleteArticles = async (articleIds) => {
 };
 
 export default {
-  getArticlesByKeyword,
+  // getArticlesByKeyword,
   prepareDataForWordCloud,
   getUserSearches,
   callNYTimesAPI,
@@ -249,4 +249,5 @@ export default {
   saveSearch,
   saveArticles,
   deleteArticles,
+  callGuardianAPI
 };
