@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 const articleSchema = new mongoose.Schema({
-  webTitle: { type: String, required: true },
+  title: { type: String, required: true },
   webUrl: { type: String, required: true },
-  trailText: { type: String },
+  abstract: { type: String },
   webPublicationDate: { type: Date, required: true },
   adxKeywords: { type: String },
   desFacet: { type: [String] },

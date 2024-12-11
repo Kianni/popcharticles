@@ -32,9 +32,9 @@ const callGuardianAPI = async (keyword, fromDate, toDate, howManyArticles) => {
 const saveArticles = async (articles, searchId, userId) => {
   try {
     const articleDocs = articles.map((article) => ({
-      webTitle: article.webTitle || article.title,
+      title: article.webTitle || article.title,
       webUrl: article.webUrl || article.url,
-      trailText: article.fields?.trailText || article.abstract,
+      abstract: article.fields?.trailText || article.abstract,
       webPublicationDate: new Date(
         article.webPublicationDate || article.published_date
       ),

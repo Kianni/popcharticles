@@ -47,6 +47,7 @@ const fetchTopPopular = async (req, res) => {
 const fetchTopArticles = async (req, res) => {
   try {
     const data = await articleService.callNYTimesAPI();
+    // console.log("data", data);
     return data.results;
   } catch (error) {
     console.error('Error fetching top articles:', error);
