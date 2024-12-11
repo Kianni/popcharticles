@@ -231,6 +231,15 @@ const getArticlesBySearchId = async (searchId) => {
   }
 };
 
+const deleteArticles = async (articleIds) => {
+  try {
+    await Article.deleteMany({ _id: { $in: articleIds } });
+  } catch (error) {
+    console.error('Error deleting articles:', error);
+    throw error;
+  }
+};
+
 export default {
   getArticlesByKeyword,
   prepareDataForWordCloud,
@@ -239,4 +248,5 @@ export default {
   getArticlesBySearchId,
   saveSearch,
   saveArticles,
+  deleteArticles,
 };
