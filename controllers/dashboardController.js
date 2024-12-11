@@ -84,6 +84,25 @@ const updateArticles = async (req, res) => {
   }
 };
 
+const updateKeywordSearchList = async (req, res) => {
+  try {
+    const { searchId, deleteArticles } = req.body;
+    await articleService.deleteArticles(deleteArticles);
+    const updatedArticles = await articleService.getArticlesBySearchId(
+      searchId
+    );
+    res.render('nytimes-most-popular', {
+      username: req.user.username,
+      articles: updatedArticles,
+      searchId: searchId,
+      title: 'Updated list',
+    });
+  } catch (error) {
+    console.error('Error updating articles:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 const serveDashboard = (req, res) => {
   res.render('dashboard', {
     username: req.user.username,
@@ -173,5 +192,6 @@ export default {
   serveTopArticlesWordcloudPartial,
   fetchTopArticlesFromAPIandSavetoDB,
   updateArticles,
-  serveKeywordArticlesPartial
+  serveKeywordArticlesPartial,
+  updateKeywordSearchList,
 };
