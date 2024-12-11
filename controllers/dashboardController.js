@@ -27,8 +27,11 @@ const fetchByKeyword = async (req, res) => {
 
 const prepareWordCloudData = async (req, res) => {
   try {
+    console.log('prepareWordCloudData req.query:', req.query); // Debugging log
     const searchId = req.query.searchId;
-    const articles = await articleService.concatCleanAndCount(searchId);
+    const numWords = req.query.numWords;
+    const wordFrequency = req.query.wordFrequency;
+    const articles = await articleService.concatCleanAndCount(searchId, numWords, wordFrequency);
     res.json(articles);
   } catch (error) {
     console.error('Error fetching top popular articles:', error);

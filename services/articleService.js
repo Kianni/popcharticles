@@ -106,7 +106,8 @@ const saveSearch = async ({
 //   }
 // };
 
-const concatCleanAndCount = async (searchId) => {
+const concatCleanAndCount = async (searchId, numWords, wordFrequency) => {
+  console.log('searchId:', searchId, 'numWords:', numWords, 'wordFrequency:', wordFrequency);
   let data = [];
   try {
     data = await getArticlesBySearchId(searchId);
@@ -117,11 +118,7 @@ const concatCleanAndCount = async (searchId) => {
   
   const rawText = concatenateTextForWordCloud(data);
   const cleanerText = cleanText(rawText);
-  const wordCloudData = wordFreq(
-    cleanerText,
-    null,
-    50
-  );
+  const wordCloudData = wordFreq(cleanerText, numWords, wordFrequency);
   return wordCloudData;
 };
 
@@ -157,7 +154,7 @@ const concatenateTextForWordCloud = (articles) => {
     .join(' ');
 };
 
-const wordFreq = (wordsByCommas, minFrequency = null, topN = null) => {
+const wordFreq = (wordsByCommas, topN, minFrequency) => {
   let wordFreq = {};
   wordsByCommas.forEach((word) => {
     word = word.trim().toLowerCase(); // Normalize case and trim spaces
@@ -170,7 +167,7 @@ const wordFreq = (wordsByCommas, minFrequency = null, topN = null) => {
   let wordArray = Object.entries(wordFreq);
 
   // Filter words by minimum frequency
-  if (minFrequency !== null){
+  if (minFrequency != null){
     wordArray = wordArray.filter(([word, freq]) => freq >= minFrequency);
   }
 
@@ -178,7 +175,7 @@ const wordFreq = (wordsByCommas, minFrequency = null, topN = null) => {
   wordArray.sort((a, b) => b[1] - a[1]);
 
   // If topN is specified, take only the top N words
-  if (topN !== null) {
+  if (topN != null) {
     wordArray = wordArray.slice(0, topN);
   }
 
