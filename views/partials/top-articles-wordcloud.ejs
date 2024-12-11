@@ -1,16 +1,8 @@
-<button id="fetchTopArticles" title="Fetch Word Cloud from NYTimes last seven days most viewed articles">Fetch Word Cloud</button>
+<a href="#" id="createWordCloud" data-search-id="<%= searchId %>" class="btn btn-primary">Create Word Cloud</a>
 <button id="downloadWordCloud" title="Download Word Cloud as Image">Download Word Cloud</button>
 
 <div id="wordCloudContainer" style="width: 1000px; height: 800px;">
 </div>
-
-<h2>Wordcloud</h2>
-<!-- Render wordcloud data here -->
-<ul>
-  <% wordcloud.forEach(item => { %>
-    <li><%= item.title %></li>
-  <% }) %>
-</ul>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="/js/wordcloud2.js"></script>

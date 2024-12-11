@@ -1,8 +1,10 @@
 document
-  .getElementById('fetchTopArticles')
-  .addEventListener('click', async () => {
+  .getElementById('createWordCloud')
+  .addEventListener('click', async (event) => {
+    event.preventDefault(); // Prevent the default anchor link behavior
+    const searchId = event.target.getAttribute('data-search-id'); // Extract searchId from data attribute
     try {
-      const response = await fetch('/top-popular', {
+      const response = await fetch(`/top-popular?searchId=${searchId}`, {
         method: 'GET',
       });
       const wordCloudProto = await response.json(); // Update the DOM with the fetched articles
@@ -17,7 +19,7 @@ document
         console.error('Invalid wordCloudProto structure:', wordCloudProto);
         return;
       }
-      
+
       // Generate the word cloud
       WordCloud(document.getElementById('wordCloudContainer'), {
         list: wordCloudProto,

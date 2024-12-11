@@ -29,14 +29,8 @@ const fetchByKeyword = async (req, res) => {
 
 const fetchTopPopular = async (req, res) => {
   try {
-    let {popularityPeriod, dateOfSearch, wordFrequencyThreshold, includedTopWordsNumber} = req.query;
-    const articles = await articleService.getTopPopular(
-      (popularityPeriod = popularityPeriod),
-      dateOfSearch,
-      wordFrequencyThreshold,
-      (includedTopWordsNumber = 50),
-      req.user._id
-    );
+    const searchId = req.query.searchId;
+    const articles = await articleService.prepareDataForWordCloud(searchId);
     res.json(articles);
   } catch (error) {
     console.error('Error fetching top popular articles:', error);

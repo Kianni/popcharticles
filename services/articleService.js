@@ -3,6 +3,7 @@ import guardianApiKey from '../config/guardianApiKey.js';
 import nyTimesApiKey from '../config/nyTimesApiKey.js';
 import Article from '../models/Article.js';
 import Search from '../models/Search.js';
+import { get } from 'mongoose';
 
 // Function to fetch articles by keyword
 const callGuardianAPI = async (keyword, fromDate, toDate, howManyArticles) => {
@@ -105,34 +106,21 @@ const getArticlesByKeyword = async (
   }
 };
 
-const getTopPopular = async (      
-      popularityPeriod,
-      dateOfSearch,
-      wordFrequencyThreshold,
-      includedTopWordsNumber,
-      userId) => {
-        let data = [];
-        try {
-          const searchId = await saveSearch({
-            popularityPeriod: popularityPeriod,
-            dateOfSearch: dateOfSearch,
-            wordFrequencyThreshold: wordFrequencyThreshold,
-            includedTopWordsNumber: includedTopWordsNumber,
-            userId: userId,
-          });
-          data = await callNYTimesAPI();
-          await saveArticles(data.results, searchId, userId);
-        } catch (error) {
-          console.error('Error fetching top popular articles:', error);
-          return [];
-        }
+const prepareDataForWordCloud = async (searchId) => {
+  let data = [];
+  try {
+    data = await getArticlesBySearchId(searchId);
+  } catch (error) {
+    console.error('Error fetching top popular articles:', error);
+    return [];
+  }
   
-  const rawText = concatenateTextForWordCloud(data.results);
+  const rawText = concatenateTextForWordCloud(data);
   const cleanerText = cleanText(rawText);
   const wordCloudData = wordFreq(
     cleanerText,
     null,
-    includedTopWordsNumber
+    50
   );
   return wordCloudData;
 };
@@ -245,10 +233,10 @@ const getArticlesBySearchId = async (searchId) => {
 
 export default {
   getArticlesByKeyword,
-  getTopPopular,
+  prepareDataForWordCloud,
   getUserSearches,
   callNYTimesAPI,
   getArticlesBySearchId,
   saveSearch,
-  saveArticles
+  saveArticles,
 };
