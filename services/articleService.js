@@ -106,7 +106,7 @@ const saveSearch = async ({
 //   }
 // };
 
-const prepareDataForWordCloud = async (searchId) => {
+const concatCleanAndCount = async (searchId) => {
   let data = [];
   try {
     data = await getArticlesBySearchId(searchId);
@@ -242,12 +242,12 @@ const deleteArticles = async (articleIds) => {
 
 export default {
   // getArticlesByKeyword,
-  prepareDataForWordCloud,
+  concatCleanAndCount,
   getUserSearches,
   callNYTimesAPI,
   getArticlesBySearchId,
   saveSearch,
   saveArticles,
   deleteArticles,
-  callGuardianAPI
+  callGuardianAPI,
 };

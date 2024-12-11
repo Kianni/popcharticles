@@ -25,10 +25,10 @@ const fetchByKeyword = async (req, res) => {
   }
 };
 
-const fetchTopPopular = async (req, res) => {
+const prepareWordCloudData = async (req, res) => {
   try {
     const searchId = req.query.searchId;
-    const articles = await articleService.prepareDataForWordCloud(searchId);
+    const articles = await articleService.concatCleanAndCount(searchId);
     res.json(articles);
   } catch (error) {
     console.error('Error fetching top popular articles:', error);
@@ -183,7 +183,7 @@ const serveArchive = async (req, res) => {
 export default {
   serveDashboard,
   fetchByKeyword,
-  fetchTopPopular,
+  prepareWordCloudData,
   serveGuardianSearch,
   serveArchive,
   serveTopArticlesPartial,

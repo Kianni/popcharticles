@@ -4,7 +4,7 @@ document
     event.preventDefault(); // Prevent the default anchor link behavior
     const searchId = event.target.getAttribute('data-search-id'); // Extract searchId from data attribute
     try {
-      const response = await fetch(`/top-popular?searchId=${searchId}`, {
+      const response = await fetch(`/prepareWordCloudData?searchId=${searchId}`, {
         method: 'GET',
       });
       const wordCloudProto = await response.json(); // Update the DOM with the fetched articles
