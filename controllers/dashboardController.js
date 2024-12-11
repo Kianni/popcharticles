@@ -88,10 +88,8 @@ const updateKeywordSearchList = async (req, res) => {
   try {
     const { searchId, deleteArticles } = req.body;
     await articleService.deleteArticles(deleteArticles);
-    const updatedArticles = await articleService.getArticlesBySearchId(
-      searchId
-    );
-    res.render('nytimes-most-popular', {
+    const updatedArticles = await articleService.getArticlesBySearchId(searchId);
+    res.render('guardian-search', {
       username: req.user.username,
       articles: updatedArticles,
       searchId: searchId,
