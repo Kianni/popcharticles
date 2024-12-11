@@ -233,9 +233,22 @@ const getUserSearches = async (userId) => {
   }
 };
 
+const getArticlesBySearchId = async (searchId) => {
+  try {
+    const articles = await Article.find({ searchId });
+    return articles;
+  } catch (error) {
+    console.error('Error fetching articles by searchId:', error);
+    throw new Error('Internal server error');
+  }
+};
+
 export default {
   getArticlesByKeyword,
   getTopPopular,
   getUserSearches,
   callNYTimesAPI,
+  getArticlesBySearchId,
+  saveSearch,
+  saveArticles
 };

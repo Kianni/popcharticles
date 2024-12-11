@@ -2,8 +2,8 @@
 
 
 <div id="top-articles-container">
-  <%- include('partials/top-articles', { articles: articles }) %>
+  <%- include('partials/top-articles', { articles: articles, searchId: searchId }) %>
 </div>
 <div id="top-articles-wordcloud-container">
-  <%- include('partials/top-articles-wordcloud', { wordcloud: wordcloud }) %>
+  <%- include('partials/top-articles-wordcloud', { wordcloud: wordcloud, searchId: searchId }) %>
 </div>

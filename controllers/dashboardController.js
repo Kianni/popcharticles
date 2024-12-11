@@ -66,9 +66,51 @@ const serveNYTimesMostPopular = async (req, res) => {
   try {
     const articles = await fetchTopArticles();
     const wordcloudData = [{title: "HABABABA"}];
+    const searchId = await articleService.saveSearch({
+      userId: req.user._id,
+      // Add other search parameters if needed
+    });
+    await articleService.saveArticles(articles, searchId, req.user._id);
     res.render('nytimes-most-popular', {
       username: req.user.username,
       articles: articles,
+      wordcloud: wordcloudData,
+      searchId: searchId,
+      title: 'NY Times Most Popular',
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: 'Internal server error', error: error.message });
+  }
+};
+
+const serveTopArticlesPartial = async (req, res) => {
+  try {
+    const searchId = req.query.searchId;
+    const articles = await articleService.getArticlesBySearchId(searchId);
+    // console.log("articles", articles);
+    res.render('nytimes-most-popular', {
+      username: req.user.username,
+      articles: articles,
+      searchId: searchId,
+      wordcloud: [{title: "Wordcloud"}],//req.wordcloud, // Pass existing wordcloud data if needed
+      title: 'NY Times Most Popular',
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const serveTopArticlesWordcloudPartial = async (req, res) => {
+  try {
+    const wordcloudData = "what kind of data?" // Adjust if different data source
+    const searchId = req.query.searchId;
+    const articles = await articleService.getArticlesBySearchId(searchId);
+    res.render('nytimes-most-popular', {
+      username: req.user.username,
+      articles: articles, // Pass existing articles data if needed
+      searchId: searchId,
       wordcloud: wordcloudData,
       title: 'NY Times Most Popular',
     });
@@ -99,4 +141,13 @@ const serveArchive = async (req, res) => {
   }
 };
 
-export default { serveDashboard, fetchByKeyword, fetchTopPopular, serveNYTimesMostPopular, serveGuardianSearch, serveArchive, fetchTopArticles };
+export default { 
+  serveDashboard, 
+  fetchByKeyword, 
+  fetchTopPopular, 
+  serveNYTimesMostPopular, 
+  serveGuardianSearch, 
+  serveArchive, 
+  serveTopArticlesPartial,
+  serveTopArticlesWordcloudPartial 
+};

@@ -1,9 +1,9 @@
-<a href="/fetch-top-articles" class="btn btn-primary">Fetch Top Articles</a>
+<a href="/top-articles-partial?searchId=<%= searchId %>" class="btn btn-primary">Fetch Top Articles</a>
 <ul>
   <% articles.forEach(article => { %>
     <li>
-      <h2><%= article.title %></h2>
-      <p><%= article.abstract %></p>
+      <h2><%= article.webTitle %></h2>
+      <p><%= article.trailText %></p>
     </li>
   <% }) %>
 </ul>
