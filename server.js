@@ -47,6 +47,7 @@ app.set('layout', 'layout');
 // Middleware to set user variable
 app.use((req, res, next) => {
   res.locals.isAuthenticated = !!req.cookies.token;
+  res.locals.currentRoute = req.path;
   next();
 });
 

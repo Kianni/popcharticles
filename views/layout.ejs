@@ -15,7 +15,7 @@
     <nav class="navbar navbar-light bg-light">
       <a class="navbar-brand" href="/">Popcharticles</a>
       <div>
-        <% if (!isAuthenticated) { %>
+        <% if (!isAuthenticated && currentRoute !== '/registration' && currentRoute !== '/login') { %>
           <a class="btn btn-outline-primary" href="/login">Login</a>
           <a class="btn btn-primary" href="/registration">Register</a>
         <% } %>
