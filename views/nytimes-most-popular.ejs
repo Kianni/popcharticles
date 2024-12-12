@@ -1,9 +1,27 @@
-<a href="/dashboard" class="btn btn-success">To Dashboard</a>
+<div class="container mt-3">
+  <div class="d-flex justify-content-end">
+    <a href="/dashboard" class="btn btn-success">To Dashboard</a>
+  </div>
 
+  <div class="card mt-3">
+    <div class="card-header">
+      Get Top Popular Articles from New York Times for recent:
+    </div>
+    <div class="card-body">
+      <div id="top-articles-container">
+        <%- include('partials/top-articles', { articles: articles, searchId: searchId }) %>
+      </div>
+    </div>
+  </div>
 
-<div id="top-articles-container">
-  <%- include('partials/top-articles', { articles: articles, searchId: searchId }) %>
-</div>
-<div id="top-articles-wordcloud-container">
-  <%- include('partials/top-articles-wordcloud', { searchId: searchId }) %>
-</div>
+  <div class="card mt-3">
+    <div class="card-header">
+      Create Word Cloud
+    </div>
+    <div class="card-body">
+      <div id="top-articles-wordcloud-container">
+        <%- include('partials/top-articles-wordcloud', { searchId: searchId }) %>
+      </div>
+    </div>
+  </div>
+<div>

@@ -1,16 +1,16 @@
 // Function to create and insert the form
 function createWordCloudForm() {
   const formHtml = `
-      <form id="wordCloudForm" class="form-inline">
-        <div class="form-group">
-          <label for="numWords">Number of Words:</label>
-          <input type="number" class="form-control" id="numWords" name="numWords" min="50" step="1">
-          <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('numWords').value = '';">Clear</button>
+      <form id="wordCloudForm" class="form">
+        <div class="form-group d-flex align-items-center">
+          <label for="numWords" class="me-2 mr-2">Number of Words:</label>
+          <input type="number" class="form-control mr-2" id="numWords" name="numWords" min="0" step="1" value="50" style="width: 200px;">
+          <button type="button" class="btn btn-sm btn-secondary ms-2" onclick="document.getElementById('numWords').value = '';">Clear</button>
         </div>
-        <div class="form-group">
-          <label for="wordFrequency">Word Frequency:</label>
-          <input type="number" class="form-control" id="wordFrequency" name="wordFrequency" min="1" step="1">
-          <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('wordFrequency').value = '';">Clear</button>
+        <div class="form-group d-flex align-items-center mt-3">
+          <label for="wordFrequency" class="me-2 mr-2">Word Frequency:</label>
+          <input type="number" class="form-control mr-2" id="wordFrequency" name="wordFrequency" min="1" step="1" value="1" style="width: 200px;">
+          <button type="button" class="btn btn-sm btn-secondary ms-2" onclick="document.getElementById('wordFrequency').value = '';">Clear</button>
         </div>
       </form>
     `;

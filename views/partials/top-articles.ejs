@@ -1,30 +1,63 @@
-<form action="/top-popular-fetch-and-save" method="get" class="form-inline mb-3">
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="popularityPeriod" id="days1" value="1">
-    <label class="form-check-label" for="days1">1 Day</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="popularityPeriod" id="days7" value="7" checked>
-    <label class="form-check-label" for="days7">7 Days</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="popularityPeriod" id="days30" value="30">
-    <label class="form-check-label" for="days30">30 Days</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<div class="container mt-3">
+  <form action="/top-popular-fetch-and-save" method="get" class="mb-3">
+    <div class="form-group">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="popularityPeriod" id="days1" value="1">
+        <label class="form-check-label" for="days1">1 Day</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="popularityPeriod" id="days7" value="7" checked>
+        <label class="form-check-label" for="days7">7 Days</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="popularityPeriod" id="days30" value="30">
+        <label class="form-check-label" for="days30">30 Days</label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Fetch Articles</button>
+  </form>
 
-<a href="/top-articles-partial?searchId=<%= searchId %>" class="btn btn-primary">Fetch Top Articles</a>
-<form id="updateArticlesForm" action="/update-articles" method="POST">
-  <input type="hidden" name="searchId" value="<%= searchId %>">
-  <ul>
-    <% articles.forEach(article => { %>
-      <li>
-        <h2><%= article.title %></h2>
-        <p><%= article.abstract %></p>
-        <input type="checkbox" name="deleteArticles" value="<%= article._id %>"> Delete
-      </li>
-    <% }) %>
-  </ul>
-  <button type="submit" class="btn btn-danger">Update Articles</button>
-</form>
+<!-- <a href="/top-articles-partial?searchId=<%= searchId %>" class="btn btn-primary">Fetch Top Articles</a> -->
+  <form id="updateArticlesForm" action="/update-articles" method="POST">
+    <input type="hidden" name="searchId" value="<%= searchId %>">
+
+    <div class="form-group">
+      <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#articlesList" aria-expanded="false" aria-controls="articlesList">
+        Show articles/Hide articles
+      </button>
+    </div>
+
+    <div class="collapse show" id="articlesList">
+      <ul class="list-unstyled">
+        <% articles.forEach(article => { %>
+          <li class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <h2 class="card-title font-weight-bold"><%= article.title %></h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <p class="card-text"><%= article.abstract %></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 text-right">
+                  <input type="checkbox" name="deleteArticles" value="<%= article._id %>"> Delete
+                </div>
+              </div>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+    
+    <button type="submit" class="btn btn-danger my-3">Update Articles</button>
+  </form>
+
+</div
