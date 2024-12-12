@@ -1,5 +1,44 @@
-<h1>Welcome to Popcharticles</h1>
-<img src="/images/logo.jpg" alt="Welcome Image" style="width:100%;max-width:600px;">
-<br>
-<button onclick="window.location.href='/registration'">Register</button>
-<button onclick="window.location.href='/login'">Login</button>
+<style>
+    .home {
+      background: linear-gradient(to bottom, #f5f5dc, #707069);
+      height: 70vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    }
+    .home h1 {
+      font-size: 3rem;
+    }
+    .home p {
+      font-size: 1.5rem;
+    }
+    .home img {
+      border-radius: 50%;
+    }
+
+  </style>
+ <!-- Hero Section -->
+  <div class="home">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <img src="/images/logo.jpg" alt="Hero Image" class="img-fluid p-5">
+      </div>
+      <div class="col-md-6 text-center text-md-left">
+        <h1>Discover Trends and Insights</h1>
+        <p>Generate word clouds from trending articles on NYTimes and The Guardian.</p>
+        <div class="mt-4">
+          <a class="btn btn-primary btn-lg" href="/registration">Get Started</a>
+          <a class="btn btn-outline-light btn-lg" href="/login">Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supporting Content -->
+  <div class="text-center mt-5">
+    <h2>What You Can Do</h2>
+    <p class="lead">Analyze the most popular news topics or dive deep into specific keywords with our customizable word clouds.</p>
+  </div>
