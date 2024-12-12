@@ -44,6 +44,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(expressLayouts);
 app.set('layout', 'layout');
 
+// Middleware to set user variable
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = !!req.cookies.token;
+  next();
+});
+
 // Route to serve the home page
 app.get('/', (req, res) => {
   res.render('index', { title: 'Home' });
