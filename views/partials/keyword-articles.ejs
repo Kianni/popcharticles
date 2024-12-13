@@ -1,4 +1,5 @@
-   <form id="searchForm" action="/articles" method="GET">
+  <div class="container mt-3">
+  <form id="searchForm" action="/articles" method="GET">
       <div class="form-group">
         <label for="keyword">Keyword:</label>
         <input type="text" id="keyword" name="keyword" class="form-control">
@@ -15,24 +16,52 @@
         <label for="howManyArticles">How Many Articles:</label>
         <input type="number" id="howManyArticles" name="howManyArticles" class="form-control">
       </div>
-      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="submit" class="btn btn-primary">Fetch Articles</button>
     </form>
         <h4>Fetched <%= articles.length %> articles</h4>
 
 <form id="updateArticlesForm" action="/update-keyword-articles" method="POST">
   <input type="hidden" name="searchId" value="<%= searchId %>">
-  <ul>
+
+  <div class="form-group">
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#articlesList" aria-expanded="false" aria-controls="articlesList">
+      Show articles/Hide articles
+    </button>
+  </div>
+
+  <div class="collapse show" id="articlesList">
+  <ul class="list-unstyled">
     <% articles.forEach(article => { %>
-      <li>
-        <h2><%= article.title %></h2>
-        <p><%= article.abstract %></p>
-        <a href="<%= article.webUrl %>" target="_blank">Read more</a>
-        <input type="checkbox" name="deleteArticles" value="<%= article._id %>"> Delete
+      <li class="card mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="card-title font-weight-bold"><%= article.title %></h2>
+            </div>  
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <p class="card-text"><%= article.abstract %></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <a href="<%= article.webUrl %>" target="_blank">Read full text</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 text-right">
+              <input type="checkbox" name="deleteArticles" value="<%= article._id %>"> Delete
+            </div>
+          </div>
+        </div>
       </li>
     <% }) %>
   </ul>
+  </div>
+
   <button type="submit" class="btn btn-danger">Update Articles</button>
 </form>
-
+  </div>
 
 <script src="/js/default_values_keyword_search.js"></script>

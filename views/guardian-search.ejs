@@ -1,8 +1,27 @@
-<a href="/dashboard" class="btn btn-success">To Dashboard</a>
-
-<div id="keyword-articles-container">
-  <%- include('partials/keyword-articles', { articles: articles, searchId: searchId }) %>
+<div class="container mt-3">
+  <div class="d-flex justify-content-end">
+    <a href="/dashboard" class="btn btn-success">To Dashboard</a>
+  </div>
 </div>
-<div id="keyword-articles-wordcloud-container">
-  <%- include('partials/keyword-articles-wordcloud', {searchId: searchId} ) %>
+
+<div class="card mt-3">
+  <div class="card-header">
+    Get Articles from The Guardian for recent:
+  </div>
+  <div class="card-body">
+    <div id="keyword-articles-container">
+      <%- include('partials/keyword-articles', { articles: articles, searchId: searchId }) %>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    Create Word Cloud
+  </div>
+  <div class="card-body">
+    <div id="keyword-articles-wordcloud-container">
+      <%- include('partials/keyword-articles-wordcloud', { searchId: searchId }) %>
+    </div>
+  </div>
 </div>
