@@ -7,6 +7,7 @@ import dashboardRoutes from './routes/dashboardRoutes.js';
 import expressLayouts from 'express-ejs-layouts';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import methodOverride from 'method-override';
 
 const app = express();
 const port = 3000;
@@ -26,6 +27,7 @@ mongoose.connect('mongodb://localhost:27017/popcharticles')
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(methodOverride('_method'));
 
 // Parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -24,4 +24,6 @@ router.get('/guardian-search', authMiddleware, dashboardController.serveKeywordA
 router.get('/keyword-articles-partial', authMiddleware, dashboardController.serveKeywordArticlesPartial);
 router.get('/archive', authMiddleware, dashboardController.serveArchive);
 
+router.post('/search/delete/:id', dashboardController.deleteSearch);
+
 export default router;

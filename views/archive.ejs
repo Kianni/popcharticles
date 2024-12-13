@@ -1,15 +1,26 @@
-<a href="/dashboard" class="btn btn-success">To Dashboard</a>
+<div class="text-right">
+  <a href="/dashboard" class="btn btn-success my-3">To Dashboard</a>
+</div>
 
-<ul>
+<div class="card-deck"></div>
   <% searches.forEach(search => { %>
-    <li>
-      <strong>Keyword:</strong> <%= search.keyword %> <br>
-      <strong>Date of Search:</strong> <%= search.dateOfSearch.toDateString() %> <br>
-      <strong>From:</strong> <%= search.periodOfSearch.dateFrom ? search.periodOfSearch.dateFrom.toDateString() : 'N/A' %> <br>
-      <strong>To:</strong> <%= search.periodOfSearch.dateTo ? search.periodOfSearch.dateTo.toDateString() : 'N/A' %> <br>
-      <strong>Popularity Period:</strong> <%= search.popularityPeriod %> days <br>
-      <strong>Word Frequency Threshold:</strong> <%= search.wordFrequencyThreshold %> <br>
-      <strong>Included Top Words Number:</strong> <%= search.includedTopWordsNumber %> <br>
-    </li>
+    <div class="card mb-3">
+      <div class="card-header">
+        <%= search.keyword ? search.keyword : `NYTimes Most Popular for ${search.popularityPeriod} ${search.popularityPeriod === 1 ? 'day' : 'days'}` %>
+      </div>
+      <div class="card-body">
+        <p><strong>Date of Search:</strong> <%= search.dateOfSearch.toDateString() %></p>
+        <p><strong>From:</strong> <%= search.periodOfSearch.dateFrom ? search.periodOfSearch.dateFrom.toDateString() : 'N/A' %></p>
+        <p><strong>To:</strong> <%= search.periodOfSearch.dateTo ? search.periodOfSearch.dateTo.toDateString() : 'N/A' %></p>
+        <p><strong>Word Frequency Threshold:</strong> <%= search.wordFrequencyThreshold %></p>
+        <p><strong>Included Top Words Number:</strong> <%= search.includedTopWordsNumber %></p>
+        <!-- <p><strong>Search ID:</strong> <%= search._id %></p> -->
+        <div class="text-right">
+          <form action="/search/delete/<%= search._id %>" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
   <% }) %>
-</ul>
+</div>

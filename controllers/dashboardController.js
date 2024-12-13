@@ -1,4 +1,5 @@
 import articleService from '../services/articleService.js';
+import Search from '../models/Search.js';
 
 const fetchByKeyword = async (req, res) => {
   try {
@@ -183,6 +184,17 @@ const serveArchive = async (req, res) => {
   }
 };
 
+export const deleteSearch = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Search.findByIdAndDelete(id);
+    res.redirect('/archive');
+    // res.status(200).json({ message: 'Search deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting search', error });
+  }
+};
+
 export default {
   serveDashboard,
   fetchByKeyword,
@@ -195,4 +207,5 @@ export default {
   updateArticles,
   serveKeywordArticlesPartial,
   updateKeywordSearchList,
+  deleteSearch,
 };
