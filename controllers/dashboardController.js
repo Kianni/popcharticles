@@ -80,7 +80,7 @@ const updateArticles = async (req, res) => {
       username: req.user.username,
       articles: updatedArticles,
       searchId: searchId,
-      title: 'Updated list',
+      title: 'Shorter List of NY Times Most Popular Articles',
     });
   } catch (error) {
     console.error('Error updating articles:', error);
@@ -97,7 +97,7 @@ const updateKeywordSearchList = async (req, res) => {
       username: req.user.username,
       articles: updatedArticles,
       searchId: searchId,
-      title: 'Updated list',
+      title: 'Shorter List of Guardian Articles',
     });
   } catch (error) {
     console.error('Error updating articles:', error);

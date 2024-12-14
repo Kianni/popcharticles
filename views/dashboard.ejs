@@ -1,11 +1,27 @@
+<style>
+  .archiveLink {
+  font-size: larger;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.dataLink {
+  font-size: larger;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+</style>
+
 <h1>Welcome to your dashboard, <%= username %>!</h1>
 
-
-
-  <div class="container center-buttons">
-    <div class="btn-group">
-      <a href="/nytimes-most-popular" class="btn btn-primary dataLink"><strong>New York Times</strong><br>Most Popular</a>
-      <a href="/guardian-search" class="btn btn-secondary dataLink"><strong>Guardian</strong><br>Keyword Search</a>
-      <a href="/archive" class="btn btn-success archiveLink">Archive</a>
-    </div>
+<div class="container center-buttons">
+  <div class="btn-group">
+    <a href="/nytimes-most-popular" class="btn btn-primary dataLink"><strong>New York Times</strong><br>Most Popular</a>
+    <a href="/guardian-search" class="btn btn-secondary dataLink"><strong>Guardian</strong><br>Keyword Search</a>
+    <a href="/archive" class="btn btn-success archiveLink">Archive</a>
   </div>
+</div>
