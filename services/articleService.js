@@ -107,7 +107,7 @@ const saveSearch = async ({
 // };
 
 const concatCleanAndCount = async (searchId, numWords, wordFrequency) => {
-  console.log('searchId:', searchId, 'numWords:', numWords, 'wordFrequency:', wordFrequency);
+  // console.log('searchId:', searchId, 'numWords:', numWords, 'wordFrequency:', wordFrequency);
   let data = [];
   try {
     data = await getArticlesBySearchId(searchId);
