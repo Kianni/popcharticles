@@ -19,6 +19,9 @@
           <a class="btn btn-outline-primary" href="/login">Login</a>
           <a class="btn btn-primary" href="/registration">Register</a>
         <% } %>
+        <% if (isAuthenticated && currentRoute == '/info') { %>
+          <a href="/dashboard" class="btn btn-primary">Dashboard</a>
+        <% } %>
         <% if (isAuthenticated) { %>
           <a href="http://127.0.0.1:3000/logout" class="btn btn-success">Logout</a>
         <% } %>
