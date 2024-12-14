@@ -1,11 +1,15 @@
 <div class="container mt-3">
+  <h1>Two steps until word cloud!</h1>
+
+
   <div class="d-flex justify-content-end">
     <a href="/dashboard" class="btn btn-success">To Dashboard</a>
   </div>
 
+  <!-- Step 1: Fetch Articles -->
   <div class="card mt-3">
     <div class="card-header">
-      Get Top Popular Articles for recent:
+      <h3>Step 1: Fetch Popular Articles</h3>
     </div>
     <div class="card-body">
       <div id="top-articles-container">
@@ -14,14 +18,25 @@
     </div>
   </div>
 
-  <div class="card mt-3">
-    <div class="card-header">
-      Create Word Cloud
-    </div>
-    <div class="card-body">
-      <div id="top-articles-wordcloud-container">
-        <%- include('partials/top-articles-wordcloud', { searchId: searchId }) %>
+  <!-- Step 2: Create Word Cloud -->
+  <% if (articles.length > 0) { %>
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3>Step 2: Create Word Cloud</h3>
+      </div>
+      <div class="card-body">
+        <div id="top-articles-wordcloud-container">
+          <%- include('partials/top-articles-wordcloud', { searchId: searchId }) %>
+        </div>
       </div>
     </div>
-  </div>
-<div>
+  <% } else { %>
+    <div class="card mt-3" id="wordcloud-placeholder">
+      <div class="card-header">
+        <h5 class="text-right text-secondary">
+          ...after fetching articles, you can create a word cloud...
+        </h5>
+      </div>
+    </div>
+  <% } %>
+</div>
