@@ -28,7 +28,7 @@ const fetchByKeyword = async (req, res) => {
 
 const prepareWordCloudData = async (req, res) => {
   try {
-    console.log('prepareWordCloudData req.query:', req.query); // Debugging log
+    // console.log('prepareWordCloudData req.query:', req.query); // Debugging log
     const searchId = req.query.searchId;
     const numWords = req.query.numWords;
     const wordFrequency = req.query.wordFrequency;
@@ -36,17 +36,6 @@ const prepareWordCloudData = async (req, res) => {
     res.json(articles);
   } catch (error) {
     console.error('Error fetching top popular articles:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-const fetchTopArticles = async (req, res) => {
-  try {
-    const data = await articleService.callNYTimesAPI();
-    // console.log("data", data);
-    return data.results;
-  } catch (error) {
-    console.error('Error fetching top articles:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
