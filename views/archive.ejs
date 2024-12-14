@@ -12,8 +12,10 @@
       </div>
       <div class="card-body">
         <p><strong>Date of Search:</strong> <%= search.dateOfSearch.toDateString() %></p>
-        <p><strong>From:</strong> <%= search.periodOfSearch.dateFrom ? search.periodOfSearch.dateFrom.toDateString() : 'N/A' %></p>
-        <p><strong>To:</strong> <%= search.periodOfSearch.dateTo ? search.periodOfSearch.dateTo.toDateString() : 'N/A' %></p>
+        <p><strong>From:</strong> <%= search.periodOfSearch.dateFrom ? search.periodOfSearch.dateFrom.toDateString() : new Date(search.dateOfSearch.getTime() - search.popularityPeriod * 24 * 60 * 60 * 1000).toDateString() %></p>
+        <% if (search.periodOfSearch.dateTo) { %>
+          <p><strong>To:</strong> <%= search.periodOfSearch.dateTo.toDateString() %></p>
+        <% } %>
         <div class="d-flex justify-content-between">
           <a href="<%- search.keyword ? '/keyword-articles-partial?searchId=' : '/top-articles-partial?searchId=' %><%= search._id %>" 
             class="btn btn-primary">View</a>
