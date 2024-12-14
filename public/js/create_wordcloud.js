@@ -65,6 +65,11 @@ document
         return;
       }
 
+      // Set the style for the wordCloudContainer
+      const wordCloudContainer = document.getElementById('wordCloudContainer');
+      wordCloudContainer.style.width = '1000px';
+      wordCloudContainer.style.height = '800px';
+
       // Generate the word cloud
       WordCloud(document.getElementById('wordCloudContainer'), {
         list: wordCloudProto,
