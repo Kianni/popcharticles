@@ -9,7 +9,7 @@ function createWordCloudForm() {
         </div>
         <div class="form-group d-flex align-items-center mt-3">
           <label for="wordFrequency" class="me-2 mr-2">Word Frequency:</label>
-          <input type="number" class="form-control mr-2" id="wordFrequency" name="wordFrequency" min="1" step="1" value="1" style="width: 200px;">
+          <input type="number" class="form-control mr-2" id="wordFrequency" name="wordFrequency" min="1" step="1" value="undefined" style="width: 200px;">
           <button type="button" class="btn btn-sm btn-secondary ms-2" onclick="document.getElementById('wordFrequency').value = '';">Clear</button>
         </div>
       </form>
@@ -19,6 +19,16 @@ function createWordCloudForm() {
 
 // Call the function to create the form
 createWordCloudForm();
+
+// Add an event listener to set value of wordFrequency to 'undefined' when numWords is changed
+document.getElementById('numWords').addEventListener('change', (event) => {
+  document.getElementById('wordFrequency').value = 'undefined';
+});
+
+// Add an event listener to set value of numWords to 'undefined' when wordFrequency is changed
+document.getElementById('wordFrequency').addEventListener('change', (event) => {
+  document.getElementById('numWords').value = 'undefined';
+});
 
 document
   .getElementById('createWordCloud')
