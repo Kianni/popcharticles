@@ -20,8 +20,8 @@
     </div>
     <button type="submit" class="btn btn-primary">Fetch Articles</button>
   </form>
+  <h4>Fetched <%= articles.length %> articles</h4>
 
-<!-- <a href="/top-articles-partial?searchId=<%= searchId %>" class="btn btn-primary">Fetch Top Articles</a> -->
   <form id="updateArticlesForm" action="/update-articles" method="POST">
     <input type="hidden" name="searchId" value="<%= searchId %>">
 

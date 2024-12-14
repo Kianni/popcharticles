@@ -8,8 +8,6 @@ const searchSchema = new mongoose.Schema({
     dateTo: { type: Date },
   },
   keyword: { type: String },
-  wordFrequencyThreshold: { type: Number },
-  includedTopWordsNumber: { type: Number },
   articles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Article' }], // Reference to Articles
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to User
 });

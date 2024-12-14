@@ -6,16 +6,17 @@
   <% searches.forEach(search => { %>
     <div class="card mb-3">
       <div class="card-header">
-        <%= search.keyword ? search.keyword : `NYTimes Most Popular for ${search.popularityPeriod} ${search.popularityPeriod === 1 ? 'day' : 'days'}` %>
+        <%- search.keyword ? 
+          'Guardian articles about <strong>' + search.keyword + '</strong>' : 
+          'NYTimes Most Popular for <strong>' + search.popularityPeriod + ' ' + (search.popularityPeriod === 1 ? 'day' : 'days') + '</strong>'%>
       </div>
       <div class="card-body">
         <p><strong>Date of Search:</strong> <%= search.dateOfSearch.toDateString() %></p>
         <p><strong>From:</strong> <%= search.periodOfSearch.dateFrom ? search.periodOfSearch.dateFrom.toDateString() : 'N/A' %></p>
         <p><strong>To:</strong> <%= search.periodOfSearch.dateTo ? search.periodOfSearch.dateTo.toDateString() : 'N/A' %></p>
-        <p><strong>Word Frequency Threshold:</strong> <%= search.wordFrequencyThreshold %></p>
-        <p><strong>Included Top Words Number:</strong> <%= search.includedTopWordsNumber %></p>
-        <!-- <p><strong>Search ID:</strong> <%= search._id %></p> -->
         <div class="text-right">
+          <a href="<%- search.keyword ? '/keyword-articles-partial?searchId=' : '/top-articles-partial?searchId=' %><%= search._id %>" 
+            class="btn btn-primary">View</a>
           <form action="/search/delete/<%= search._id %>" method="POST">
             <button type="submit" class="btn btn-danger">Delete</button>
           </form>
