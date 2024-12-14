@@ -26,4 +26,6 @@ router.get('/archive', authMiddleware, dashboardController.serveArchive);
 
 router.post('/search/delete/:id', dashboardController.deleteSearch);
 
+router.get('/info', dashboardController.info);
+
 export default router;

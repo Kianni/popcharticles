@@ -182,7 +182,7 @@ const serveArchive = async (req, res) => {
   }
 };
 
-export const deleteSearch = async (req, res) => {
+const deleteSearch = async (req, res) => {
   try {
     const { id } = req.params;
     await Search.findByIdAndDelete(id);
@@ -191,6 +191,13 @@ export const deleteSearch = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error deleting search', error });
   }
+};
+
+const info = (req, res) => {
+  res.render('info', {
+    title: 'Info',
+    additionalCSS: '<link rel="stylesheet" href="/css/info.css">',
+  });
 };
 
 export default {
@@ -206,4 +213,5 @@ export default {
   serveKeywordArticlesPartial,
   updateKeywordSearchList,
   deleteSearch,
+  info
 };

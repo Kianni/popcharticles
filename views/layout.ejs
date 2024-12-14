@@ -7,12 +7,13 @@
   <link rel="stylesheet" href="/css/styles.css">
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <%- typeof additionalCSS !== 'undefined' ? additionalCSS : '' %>
 </head>
 <body>
   <header>
       <!-- Navigation Bar -->
     <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand font-weight-bold text-primary" href="/logout">Popcharticles</a>
+      <a class="navbar-brand font-weight-bold text-primary" href="/info">Popcharticles</a>
       <div>
         <% if (!isAuthenticated && currentRoute !== '/registration' && currentRoute !== '/login') { %>
           <a class="btn btn-outline-primary" href="/login">Login</a>
