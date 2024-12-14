@@ -82,11 +82,16 @@ const updateKeywordSearchList = async (req, res) => {
     const { searchId, deleteArticles } = req.body;
     await articleService.deleteArticles(deleteArticles);
     const updatedArticles = await articleService.getArticlesBySearchId(searchId);
+    const search = await Search.findById(searchId);
     res.render('guardian-search', {
       username: req.user.username,
       articles: updatedArticles,
       searchId: searchId,
       title: 'Shorter List of Guardian Articles',
+      defaultKeyword: search.keyword,
+      defaultFromDate: search.periodOfSearch.dateFrom.toISOString().split('T')[0],
+      defaultToDate: search.periodOfSearch.dateTo.toISOString().split('T')[0],
+      defaultHowManyArticles: updatedArticles.length,
     });
   } catch (error) {
     console.error('Error updating articles:', error);
@@ -128,6 +133,10 @@ const serveKeywordArticlesPartial = async (req, res) => {
       articles: articles,
       searchId: searchId,
       title: 'Guardian Search',
+      defaultKeyword: "Christmas",
+      defaultFromDate: "2021-12-01",
+      defaultToDate: "2021-12-31",
+      defaultHowManyArticles: 10,
     });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });

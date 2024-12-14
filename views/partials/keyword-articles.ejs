@@ -1,31 +1,40 @@
   <div class="container mt-3">
   <form id="searchForm" action="/articles" method="GET">
-      <div class="form-group">
-        <label for="keyword">Keyword:</label>
-        <input type="text" id="keyword" name="keyword" class="form-control">
+    <div class="form-group row">
+      <label for="keyword" class="col-sm-2 col-form-label">Keyword:</label>
+      <div class="col-sm-4">
+        <input type="text" id="keyword" name="keyword" class="form-control" value="<%= defaultKeyword %>">
       </div>
-      <div class="form-group">
-        <label for="fromDate">From Date:</label>
-        <input type="date" id="fromDate" name="fromDate" class="form-control">
+    </div>
+    <div class="form-group row">
+      <label for="fromDate" class="col-sm-2 col-form-label">From Date:</label>
+      <div class="col-sm-4">
+        <input type="date" id="fromDate" name="fromDate" class="form-control" value="<%= defaultFromDate %>">
       </div>
-      <div class="form-group">
-        <label for="toDate">To Date:</label>
-        <input type="date" id="toDate" name="toDate" class="form-control">
+    </div>
+    <div class="form-group row">
+      <label for="toDate" class="col-sm-2 col-form-label">To Date:</label>
+      <div class="col-sm-4">
+        <input type="date" id="toDate" name="toDate" class="form-control" value="<%= defaultToDate %>">
       </div>
-      <div class="form-group">
-        <label for="howManyArticles">How Many Articles:</label>
-        <input type="number" id="howManyArticles" name="howManyArticles" class="form-control">
+    </div>
+    <div class="form-group row">
+      <label for="howManyArticles" class="col-sm-2 col-form-label">How Many Articles:</label>
+      <div class="col-sm-4">
+        <input type="number" id="howManyArticles" name="howManyArticles" class="form-control" value="<%= defaultHowManyArticles %>">
       </div>
-      <button type="submit" class="btn btn-primary">Fetch Articles</button>
+    </div>
+      <button type="submit" class="btn btn-primary mb-3">Fetch Articles</button>
     </form>
         <h4>Fetched <%= articles.length %> articles</h4>
-
+ 
+<% if (articles.length > 0) { %>
 <form id="updateArticlesForm" action="/update-keyword-articles" method="POST">
   <input type="hidden" name="searchId" value="<%= searchId %>">
 
-  <div class="form-group">
+  <div class="form-group" id="toggleButtonContainer">
     <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#articlesList" aria-expanded="false" aria-controls="articlesList">
-      Show articles/Hide articles
+      Hide/Show Articles
     </button>
   </div>
 
@@ -50,7 +59,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-12 text-right">
+            <div class="col-12 text-right text-danger">
               <input type="checkbox" name="deleteArticles" value="<%= article._id %>"> Delete
             </div>
           </div>
@@ -62,6 +71,8 @@
 
   <button type="submit" class="btn btn-danger">Update Articles</button>
 </form>
+<% } %>
   </div>
 
 <script src="/js/default_values_keyword_search.js"></script>
+<script src="/js/show_hide_articles_button.js"></script>
