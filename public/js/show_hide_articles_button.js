@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
   const buttonContainer = document.getElementById('toggleButtonContainer');
   const originalOffsetTop = buttonContainer.offsetTop;
+  const articlesList = document.getElementById('articlesList');
 
   window.addEventListener('scroll', function () {
-    if (window.scrollY > originalOffsetTop) {
+    if (window.scrollY > originalOffsetTop && articlesList.classList.contains('show')) {
       buttonContainer.style.position = 'fixed';
       buttonContainer.style.bottom = '10px';
       buttonContainer.style.left = '10px';
