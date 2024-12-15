@@ -20,10 +20,12 @@ const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Determine the appropriate MongoDB URI
+const mongoUri = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI_PRODUCTION : process.env.MONGODB_URI_LOCAL;
+
 // Connect to MongoDB
-//locally use this string 'mongodb://localhost:27017/popcharticles'
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(mongoUri)
   .then(() => {
     console.log('Connected to MongoDB');
   })
