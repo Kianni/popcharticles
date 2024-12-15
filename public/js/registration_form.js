@@ -30,7 +30,7 @@ document.getElementById('registrationForm').addEventListener('submit', async (ev
   const result = await response.json();
   if (response.ok) {
     alert(result.message);
-    window.location.href = '/login';
+    window.location.href = '/dashboard';
   } else {
     alert(result.message);
   }

@@ -1,11 +1,5 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import userService from '../services/userService.js';
-import dotenv from 'dotenv';
-
-// Load environment variables from .env file
-dotenv.config();
-const secretKey = process.env.SECRET_KEY;
 
 const authController = {
   serveRegistrationForm: (req, res) => {
@@ -38,7 +32,13 @@ const authController = {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Create a new user
-      await userService.createUser({ username, password: hashedPassword });
+      const newUser = await userService.createUser({
+        username,
+        password: hashedPassword,
+      });
+
+      // Set the token as a cookie
+      userService.setTokenCookie(res, newUser._id);
 
       res.status(200).json({ message: 'User registered successfully' });
     } catch (err) {
@@ -57,22 +57,24 @@ const authController = {
       // Find the user by username
       const user = await userService.findUserByUsername(username);
       if (!user) {
-        console.log('User not found');  
-        return res.status(400).json({ message: 'Invalid username or password' });
+        console.log('User not found');
+        return res
+          .status(400)
+          .json({ message: 'Invalid username or password' });
       }
 
       // Check if the password is correct
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
         console.log('Invalid password');
-        return res.status(400).json({ message: 'Invalid username or password' });
+        return res
+          .status(400)
+          .json({ message: 'Invalid username or password' });
       }
 
-      // Generate a JWT token
-      const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
+      // Set the token as a cookie
+      userService.setTokenCookie(res, newUser._id);
 
-      res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'Strict' });
-      // res.status(200).json({ message: 'Login successful' });
       res.redirect('/dashboard');
     } catch (err) {
       console.error('Error during user login:', err);
