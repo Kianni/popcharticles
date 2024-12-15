@@ -1,6 +1,10 @@
 import jwt from 'jsonwebtoken';
-import secretKey from '../config/secretKey.js';
+import dotenv from 'dotenv';
 import User from '../models/User.js';
+
+// Load environment variables from .env file
+dotenv.config();
+const secretKey = process.env.SECRET_KEY;
 
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token;

@@ -1,7 +1,11 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import userService from '../services/userService.js';
-import secretKey from '../config/secretKey.js';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
+const secretKey = process.env.SECRET_KEY;
 
 const authController = {
   serveRegistrationForm: (req, res) => {

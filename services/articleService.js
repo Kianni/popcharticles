@@ -1,9 +1,13 @@
 import fetch from 'node-fetch';
-import guardianApiKey from '../config/guardianApiKey.js';
-import nyTimesApiKey from '../config/nyTimesApiKey.js';
+import dotenv from 'dotenv';
 import Article from '../models/Article.js';
 import Search from '../models/Search.js';
 import { get } from 'mongoose';
+
+// Load environment variables from .env file
+dotenv.config();
+const nyTimesApiKey= process.env.NY_TIMES_API_KEY;
+const guardianApiKey = process.env.GUARDIAN_API_KEY;
 
 // Function to fetch articles by keyword
 const callGuardianAPI = async (keyword, fromDate, toDate, howManyArticles) => {
@@ -77,34 +81,6 @@ const saveSearch = async ({
     console.error('Error saving search:', error);
   }
 };
-
-// const getArticlesByKeyword = async (
-//   keyword,
-//   fromDate,
-//   toDate,
-//   howManyArticles,
-//   userId
-// ) => {
-//   try {
-//     // const searchId = await saveSearch({
-//     //   periodOfSearch: { dateFrom: fromDate, dateTo: toDate },
-//     //   keyword: keyword,
-//     //   userId: userId,
-//     // });
-
-//     // const articles = await callGuardianAPI(
-//     //   keyword,
-//     //   fromDate,
-//     //   toDate,
-//     //   howManyArticles
-//     // );
-//     // await saveArticles(articles, searchId, userId);
-//     return articles;
-//   } catch (error) {
-//     console.error('Error fetching articles:', error);
-//     return [];
-//   }
-// };
 
 const concatCleanAndCount = async (searchId, numWords, wordFrequency) => {
   // console.log('searchId:', searchId, 'numWords:', numWords, 'wordFrequency:', wordFrequency);
