@@ -2,15 +2,23 @@
 function createWordCloudForm() {
   const formHtml = `
       <form id="wordCloudForm" class="form">
-        <div class="form-group d-flex align-items-center">
-          <label for="numWords" class="me-2 mr-2">Number of Words:</label>
-          <input type="number" class="form-control mr-2" id="numWords" name="numWords" min="0" step="1" value="50" style="width: 200px;">
-          <button type="button" class="btn btn-sm btn-secondary ms-2" onclick="document.getElementById('numWords').value = '';">Clear</button>
-        </div>
+        <fieldset style="border: 1px dashed #ccc; padding: 10px;" class="col-7">
+          <legend style="font-size: 14px; padding: 0 7px; width:auto; font-style: italic;">Choose either of the two options</legend>
+          <div class="form-group d-flex align-items-center">
+            <label for="numWords" class="me-2 mr-2 col-6"><strong>Number</strong> of Top Words:</label>
+            <input type="number" class="form-control mr-2 col-3" id="numWords" name="numWords" min="0" step="1" value="50" style="width: 200px;">
+            <button type="button" class="btn btn-sm btn-secondary ms-2" onclick="document.getElementById('numWords').value = '';">Clear</button>
+          </div>
+          <p class="text-center">----------------OR---------------</p>
+          <div class="form-group d-flex align-items-center mt-3">
+            <label for="wordFrequency" class="me-2 mr-2 col-6">Minimum Word <strong>Frequency</strong>:</label>
+            <input type="number" class="form-control mr-2 col-3" id="wordFrequency" name="wordFrequency" min="1" step="1" value="undefined" style="width: 200px;">
+            <button type="button" class="btn btn-sm btn-secondary ms-2" onclick="document.getElementById('wordFrequency').value = '';">Clear</button>
+          </div>
+        </fieldset>
         <div class="form-group d-flex align-items-center mt-3">
-          <label for="wordFrequency" class="me-2 mr-2">Word Frequency:</label>
-          <input type="number" class="form-control mr-2" id="wordFrequency" name="wordFrequency" min="1" step="1" value="undefined" style="width: 200px;">
-          <button type="button" class="btn btn-sm btn-secondary ms-2" onclick="document.getElementById('wordFrequency').value = '';">Clear</button>
+          <label for="wordSize" class="me-2 mr-2 col-3">Word Size:</label>
+          <input type="number" class="form-control mr-2 col-3" id="wordSize" name="wordSize" min="1" step="1" value="10" style="width: 200px;">
         </div>
       </form>
     `;
@@ -40,6 +48,7 @@ document
     const formData = new FormData(form);
     const numWords = formData.get('numWords');
     const wordFrequency = formData.get('wordFrequency');
+    const wordSize = formData.get('wordSize');
 
     let queryParams = `searchId=${searchId}`;
     if (numWords) {
@@ -74,7 +83,7 @@ document
       WordCloud(document.getElementById('wordCloudContainer'), {
         list: wordCloudProto,
         gridSize: 10,
-        weightFactor: 5,
+        weightFactor: wordSize ? wordSize : 10,
         fontFamily: 'Times, serif',
         color: 'random-dark',
         backgroundColor: '#f9f9f9',
