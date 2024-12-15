@@ -19,7 +19,7 @@ const fetchByKeyword = async (req, res) => {
     
     await articleService.saveArticles(articles, searchId, req.user._id);
 
-    res.redirect(`/keyword-articles-partial?searchId=${searchId}`);
+    res.redirect(`/keyword-articles-partial?searchId=${searchId}&defaultKeyword=${keyword}&defaultFromDate=${fromDate}&defaultToDate=${toDate}&defaultHowManyArticles=${howManyArticles}`);
   } catch (error) {
     console.error('Error fetching articles:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -127,16 +127,17 @@ const serveTopArticlesPartial = async (req, res) => {
 const serveKeywordArticlesPartial = async (req, res) => {
   try {
     const searchId = req.query.searchId;
+    const { defaultKeyword, defaultFromDate, defaultToDate, defaultHowManyArticles } = req.query;
     const articles = await articleService.getArticlesBySearchId(searchId);
     res.render('guardian-search', {
       username: req.user.username,
       articles: articles,
       searchId: searchId,
       title: 'Guardian Search',
-      defaultKeyword: "Christmas",
-      defaultFromDate: "2021-12-01",
-      defaultToDate: "2021-12-31",
-      defaultHowManyArticles: 10,
+      defaultKeyword: defaultKeyword || 'Christmas',
+      defaultFromDate: defaultFromDate || '2021-12-01',
+      defaultToDate: defaultToDate || '2021-12-31',
+      defaultHowManyArticles: defaultHowManyArticles || 10,
     });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
