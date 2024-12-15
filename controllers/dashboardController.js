@@ -193,6 +193,16 @@ const deleteSearch = async (req, res) => {
   }
 };
 
+const search = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const search = await Search.findById(id);
+    res.json(search);
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 const info = (req, res) => {
   res.render('info', {
     title: 'Info',
@@ -213,5 +223,6 @@ export default {
   serveKeywordArticlesPartial,
   updateKeywordSearchList,
   deleteSearch,
-  info
+  info,
+  search
 };
