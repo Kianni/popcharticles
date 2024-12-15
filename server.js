@@ -8,6 +8,10 @@ import expressLayouts from 'express-ejs-layouts';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -17,11 +21,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/popcharticles')
+//locally use this string 'mongodb://localhost:27017/popcharticles'
+mongoose
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Connected to MongoDB');
   })
-  .catch(err => {
+  .catch((err) => {
     console.error('Failed to connect to MongoDB', err);
   });
 
