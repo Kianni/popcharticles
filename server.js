@@ -21,7 +21,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Determine the appropriate MongoDB URI
-const mongoUri = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI_PRODUCTION : process.env.MONGODB_URI_LOCAL;
+const mongoUri =
+  process.env.NODE_ENV === 'production'
+    ? process.env.CUSTOMCONNSTR_MONGODB_URI_PRODUCTION
+    : process.env.MONGODB_URI_LOCAL;
 
 // Connect to MongoDB
 mongoose
@@ -71,5 +74,5 @@ app.use(authRoutes);
 app.use('/', dashboardRoutes);
 
 app.listen(port, () => {
-  console.log(`Server running at http://127.0.0.1:${port}/`);
+  console.log(`Server running at port: ${port}/`);
 });
