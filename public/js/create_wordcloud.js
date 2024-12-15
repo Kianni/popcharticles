@@ -2,23 +2,33 @@
 function createWordCloudForm() {
   const formHtml = `
       <form id="wordCloudForm" class="form">
-        <fieldset style="border: 1px dashed #ccc; padding: 10px;" class="col-7">
-          <legend style="font-size: 14px; padding: 0 7px; width:auto; font-style: italic;">Choose either of the two options</legend>
-          <div class="form-group d-flex align-items-center">
-            <label for="numWords" class="me-2 mr-2 col-6"><strong>Number</strong> of Top Words:</label>
-            <input type="number" class="form-control mr-2 col-3" id="numWords" name="numWords" min="0" step="1" value="50" style="width: 200px;">
-            <button type="button" class="btn btn-sm btn-secondary ms-2" onclick="document.getElementById('numWords').value = '';">Clear</button>
+        <fieldset class="border p-3 mb-3">
+          <legend class="w-auto" style="font-size: 14px; font-style: italic;">Choose either of the two options</legend>
+          <div class="form-group row align-items-center">
+            <label for="numWords" class="col-12 col-md-3 col-form-label"><strong>Number</strong> of Top Words:</label>
+            <div class="col-12 col-md-2">
+              <input type="number" class="form-control" id="numWords" name="numWords" min="0" step="1" value="50">
+            </div>
+            <div class="col-12 col-md-2 mt-2 mt-md-0">
+              <button type="button" class="btn btn-sm btn-secondary w-100" onclick="document.getElementById('numWords').value = '';">Clear</button>
+            </div>
           </div>
-          <p class="text-center">----------------OR---------------</p>
-          <div class="form-group d-flex align-items-center mt-3">
-            <label for="wordFrequency" class="me-2 mr-2 col-6">Minimum Word <strong>Frequency</strong>:</label>
-            <input type="number" class="form-control mr-2 col-3" id="wordFrequency" name="wordFrequency" min="1" step="1" value="undefined" style="width: 200px;">
-            <button type="button" class="btn btn-sm btn-secondary ms-2" onclick="document.getElementById('wordFrequency').value = '';">Clear</button>
+          <p class="text-left my-3">----------------OR---------------</p>
+          <div class="form-group row align-items-center">
+            <label for="wordFrequency" class="col-12 col-md-3 col-form-label">Minimum Word <strong>Frequency</strong>:</label>
+            <div class="col-12 col-md-2">
+              <input type="number" class="form-control" id="wordFrequency" name="wordFrequency" min="1" step="1" value="undefined">
+            </div>
+            <div class="col-12 col-md-2 mt-2 mt-md-0">
+              <button type="button" class="btn btn-sm btn-secondary w-100" onclick="document.getElementById('wordFrequency').value = '';">Clear</button>
+            </div>
           </div>
         </fieldset>
-        <div class="form-group d-flex align-items-center mt-3">
-          <label for="wordSize" class="me-2 mr-2 col-3">Word Size:</label>
-          <input type="number" class="form-control mr-2 col-3" id="wordSize" name="wordSize" min="1" step="1" value="10" style="width: 200px;">
+        <div class="form-group row align-items-center mx-2">
+          <label for="wordSize" class="col-12 col-md-3 col-form-label">Word Size:</label>
+          <div class="col-12 col-md-2">
+            <input type="number" class="form-control" id="wordSize" name="wordSize" min="1" step="1" value="10">
+          </div>
         </div>
       </form>
     `;
