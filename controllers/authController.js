@@ -73,7 +73,7 @@ const authController = {
       }
 
       // Set the token as a cookie
-      userService.setTokenCookie(res, newUser._id);
+      userService.setTokenCookie(res, user._id);
 
       res.redirect('/dashboard');
     } catch (err) {
